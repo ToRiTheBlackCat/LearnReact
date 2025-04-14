@@ -1,41 +1,18 @@
 //class component
 import React from "react";
-
+import UserInfo from "./UserInfo.js";
+import DisplayInfo from "./DisplayInfo.js";
 class MyComponent extends React.Component {
-  state = {
-    name: "TRI NGUYEN",
-    address: "HCM city",
-    age: 21,
-  };
-
-  handleClick(event) {
-    console.log("Button clicked");
-    console.log("My name is: " + this.state.name); // chỉ tới element tương tác
-
-    //merge state -> react class: auto knowing which one is new and which one is old to update
-    this.setState({
-      name: "TRI123",
-      age: Math.floor(Math.random() * 100 + 1),
-    });
-  }
-
-  handleOnMouseOver(event) {
-    console.log(event);
-  }
   //JSX
   render() {
+    const myAge = 21;
+    const arr = ["a1,", "b2,", "c3"];
     return (
       <div>
-        My name is: {this.state.name} and I'm {this.state.age}
+        <UserInfo />
         <br />
-        <button
-          onClick={(event) => {
-            this.handleClick(event);
-          }}
-        >
-          Click me
-        </button>
-        <button onMouseOver={this.handleOnMouseOver}> Hover me</button>
+        <br />
+        <DisplayInfo name="Tri Dep Trai" age={myAge} myArr={arr} />
       </div>
     );
   }
