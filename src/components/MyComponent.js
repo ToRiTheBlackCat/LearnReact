@@ -18,6 +18,15 @@ class MyComponent extends React.Component {
       listUser: [userObj, ...this.state.listUser],
     });
   };
+  handleDeleteUser = (userId) => {
+    console.log(userId);
+    let listUsersClone = this.state.listUser;
+
+    listUsersClone = listUsersClone.filter((item) => item.id !== userId);
+    this.setState({
+      listUser: listUsersClone,
+    });
+  };
   render() {
     //React Fragment
     // <React.Fragment></React.Fragment> or
@@ -29,7 +38,10 @@ class MyComponent extends React.Component {
         </div>
         <br />
         <div className="b-container">
-          <DisplayInfo listUser={this.state.listUser} />
+          <DisplayInfo
+            listUser={this.state.listUser}
+            handleDeleteUser={this.handleDeleteUser}
+          />
         </div>
       </>
     );

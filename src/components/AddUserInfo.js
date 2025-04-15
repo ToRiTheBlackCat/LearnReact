@@ -24,6 +24,7 @@ class AddUserInfo extends React.Component {
 
   handleOnSubmit = (event) => {
     event.preventDefault();
+
     this.props.handleAddNewUser({
       id: Math.floor(Math.random() * 100 + 1) + "random",
       name: this.state.name,
