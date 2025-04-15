@@ -19,12 +19,19 @@ class MyComponent extends React.Component {
     });
   };
   render() {
+    //React Fragment
+    // <React.Fragment></React.Fragment> or
+    // <> </>
     return (
-      <div>
-        <AddUserInfo handleAddNewUser={this.handleAddNewUser} />
+      <>
+        <div className="a-container">
+          <AddUserInfo handleAddNewUser={this.handleAddNewUser} />
+        </div>
         <br />
-        <DisplayInfo listUser={this.state.listUser} />
-      </div>
+        <div className="b-container">
+          <DisplayInfo listUser={this.state.listUser} />
+        </div>
+      </>
     );
   }
 }
