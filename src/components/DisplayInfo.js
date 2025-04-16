@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import "./DisplayInfo.scss";
-import logo from "./../logo.svg";
 
 //statesless : component ko co state  != statefull
 //CLASS COMPONENT
@@ -46,12 +45,20 @@ import logo from "./../logo.svg";
 //FUNCTION COMPONENT when still not have HOOK
 const DisplayInfo = (props) => {
   const { listUser } = props;
+  const [isShowHideListUser, setShowHideListUser] = useState(true);
 
+  const handleShowHideListUser = () => {
+    setShowHideListUser(!isShowHideListUser);
+  };
   return (
     //prop - properties
 
     <div className="display-infor-container">
-      {true && (
+      <div>
+        <span onClick={() => handleShowHideListUser()}>Show list user</span>
+      </div>
+
+      {isShowHideListUser && (
         <div>
           {listUser.map((user, index) => {
             //Convert String to Number - Add +user.age in front of the variable
