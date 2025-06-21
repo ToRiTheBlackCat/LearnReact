@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import User from "./components/User/User";
 import Admin from "./components/Admin/Admin";
+import HomePage from "./components/Home/HomePage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,6 +18,9 @@ root.render(
       <Routes>
         {/* Tránh hàm event.preventDefault của tag a cổ điển - ko gây load trang */}
         <Route path="/" element={<App />}>
+          {/* Index Route để chỉ định component default */}
+          <Route index element={<HomePage />} />
+
           {/* Nested route */}
           <Route path="/users" element={<User />} />
           <Route path="/admins" element={<Admin />} />
