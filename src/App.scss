@@ -9,7 +9,28 @@ body {
 }
 .app-container {
   .header-container {
-    .navbar-nav {
+    .btn-login {
+      border-radius: 5px;
+      margin-right: 15px;
+      padding: 0 5px;
+      border: 1px solid #535353;
+      height: 40px;
+    }
+    .btn-signup {
+      border-radius: 5px;
+      margin-right: 15px;
+      padding: 0 5px;
+      background-color: #303030;
+      color: white;
+      height: 40px;
+
+      &:hover {
+        background-color: black;
+      }
+    }
+
+    .navbar {
+      padding-top: 20px;
       .nav-link {
         // Dấu & để xác định là active ngang hàng với nav-link
         &.active {
@@ -18,4 +39,10 @@ body {
       }
     }
   }
+}
+
+video {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
 }
