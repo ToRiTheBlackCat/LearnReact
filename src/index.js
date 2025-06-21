@@ -16,9 +16,11 @@ root.render(
     <BrowserRouter>
       <Routes>
         {/* Tránh hàm event.preventDefault của tag a cổ điển - ko gây load trang */}
-        <Route path="/" element={<App />} />
-        <Route path="/users" element={<User />} />
-        <Route path="/admins" element={<Admin />} />
+        <Route path="/" element={<App />}>
+          {/* Nested route */}
+          <Route path="/users" element={<User />} />
+          <Route path="/admins" element={<Admin />} />
+        </Route>
       </Routes>
     </BrowserRouter>
     {/* </React.StrictMode> */}
