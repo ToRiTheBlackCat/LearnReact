@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -15,12 +15,13 @@ const Header = () => {
             <Link to="/" className="nav-link">
               Home
             </Link>
-            <Link to="/users" className="nav-link">
+            {/* NavLink hỗ trợ className Active (tô đậm chữ khi chọn) */}
+            <NavLink to="/users" className="nav-link">
               User
-            </Link>
-            <Link to="/admins" className="nav-link">
+            </NavLink>
+            <NavLink to="/admins" className="nav-link">
               Admin
-            </Link>
+            </NavLink>
 
             {/* <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="users">User</Nav.Link>
