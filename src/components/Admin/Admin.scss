@@ -11,7 +11,7 @@
     background-position: center; // Keeps it centered
     color: white;
     padding: 20px 10px;
-    box-shadow: 2px 0 5px rgba(16, 21, 41, 0.1);
+    box-shadow: 2px 0 5px rgba(16, 21, 41, 0.05);
 
     .sidebar {
       display: flex;
@@ -55,7 +55,7 @@
 
   .admin-content {
     flex-grow: 1;
-    padding: 30px;
+    padding: 15px;
     background-color: #f1f5f9;
 
     .admin-header {

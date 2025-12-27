@@ -1,0 +1,37 @@
+.manage-user-container {
+  .users-content {
+    .img-preview {
+      border: 1px solid red;
+    }
+  }
+}
+//Modal năm bên ngoài div root chứ ko ăn theo thằng cha
+.modal-add-user {
+  .label-upload {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: fit-content;
+    padding: 3px 10px;
+    background: #eeeeee;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(156, 148, 150, 0.8);
+    }
+  }
+
+  .img-preview {
+    border: 1px dashed #ccc;
+    height: 150px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    color: #ccc;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+}
