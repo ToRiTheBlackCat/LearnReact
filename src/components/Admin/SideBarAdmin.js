@@ -6,7 +6,7 @@ const SideBarAdmin = ({ collapsed }) => {
       <h2 className="logo">Minh Tri Dep Trai✨</h2>
       <ul className="menu">
         <li>
-          <Link to="/admins" end>
+          <Link to="/admins" end={true}>
             Dashboard
           </Link>
         </li>

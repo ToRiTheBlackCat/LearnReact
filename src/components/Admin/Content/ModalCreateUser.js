@@ -1,13 +1,21 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { MdDriveFolderUpload } from "react-icons/md";
+import axios from "axios";
 
-const ModalCreateUser = () => {
-  const [show, setShow] = useState(false);
+const ModalCreateUser = (props) => {
+  const { show, setShow } = props;
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+    setEmail("");
+    setPassword("");
+    setUserName("");
+    setRole("USER");
+    setImage("");
+    setReviewImg("");
+  };
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,17 +31,38 @@ const ModalCreateUser = () => {
       console.log("upload file", file);
       const imgUrl = URL.createObjectURL(file);
       setReviewImg(imgUrl);
-      setImage(imgUrl);
+      setImage(file);
     } else {
     }
   };
 
+  const handleSubmitCreateUser = async () => {
+    //Validate
+
+    //Call apis
+    // let data = {
+    //   email: email,
+    //   password: password,
+    //   username: userName,
+    //   role: role,
+    //   userImage: image,
+    // };
+    const data = new FormData();
+    data.append("email", email);
+    data.append("password", password);
+    data.append("username", userName);
+    data.append("role", role);
+    data.append("userImage", image);
+
+    let response = await axios.post(
+      "http://localhost:8081/api/v1/participant",
+      data
+    );
+    console.log("check response create user", response);
+  };
+
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
       <Modal
         show={show}
         onHide={handleClose}
@@ -105,7 +134,7 @@ const ModalCreateUser = () => {
             <div className="col-md-12 img-preview">
               <img
                 src={reviewImg ? reviewImg : <span>Preview image</span>}
-                alt="preview"
+                alt="preview image"
               />
             </div>
           </form>
@@ -114,7 +143,7 @@ const ModalCreateUser = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={() => handleSubmitCreateUser()}>
             Save
           </Button>
         </Modal.Footer>
