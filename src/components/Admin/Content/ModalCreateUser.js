@@ -3,12 +3,14 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { MdDriveFolderUpload } from "react-icons/md";
 import axios from "axios";
+import { ToastContainer, toast, Zoom } from "react-toastify";
 
 const ModalCreateUser = (props) => {
   const { show, setShow } = props;
 
   const handleClose = () => {
     setShow(false);
+
     setEmail("");
     setPassword("");
     setUserName("");
@@ -36,17 +38,27 @@ const ModalCreateUser = (props) => {
     }
   };
 
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
   const handleSubmitCreateUser = async () => {
     //Validate
+    const isValidEmail = validateEmail(email);
+    if (!isValidEmail) {
+      toast.error("Invalid email");
+      return;
+    }
 
-    //Call apis
-    // let data = {
-    //   email: email,
-    //   password: password,
-    //   username: userName,
-    //   role: role,
-    //   userImage: image,
-    // };
+    if (!password) {
+      toast.error("Invalid password");
+      return;
+    }
+
+    //Submit data
     const data = new FormData();
     data.append("email", email);
     data.append("password", password);
@@ -58,7 +70,13 @@ const ModalCreateUser = (props) => {
       "http://localhost:8081/api/v1/participant",
       data
     );
-    console.log("check response create user", response);
+    console.log("check response create user", response.data);
+    if (response && response.data.EC === 0) {
+      toast.success(response.data.EM);
+      handleClose();
+    } else if (response && response.data.EC !== 0) {
+      toast.error(response.data.EM);
+    }
   };
 
   return (
