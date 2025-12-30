@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { MdDriveFolderUpload } from "react-icons/md";
-import axios from "axios";
 import { ToastContainer, toast, Zoom } from "react-toastify";
+import { postCreateUsers } from "../../../services/apiServices";
 
 const ModalCreateUser = (props) => {
   const { show, setShow } = props;
@@ -58,18 +58,14 @@ const ModalCreateUser = (props) => {
       return;
     }
 
-    //Submit data
-    const data = new FormData();
-    data.append("email", email);
-    data.append("password", password);
-    data.append("username", userName);
-    data.append("role", role);
-    data.append("userImage", image);
-
-    let response = await axios.post(
-      "http://localhost:8081/api/v1/participant",
-      data
+    let response = await postCreateUsers(
+      email,
+      password,
+      userName,
+      role,
+      image
     );
+
     console.log("check response create user", response.data);
     if (response && response.data.EC === 0) {
       toast.success(response.data.EM);
