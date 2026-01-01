@@ -10,7 +10,7 @@ const Admin = () => {
         <SideBarAdmin />
       </div>
       <div className="admin-content">
-        <div className="admin-header"></div>
+        {/* <div className="admin-header"></div> */}
         <div className="admin-main">
           <Outlet />
         </div>
