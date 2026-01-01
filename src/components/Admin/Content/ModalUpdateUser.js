@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { MdDriveFolderUpload } from "react-icons/md";
 import { ToastContainer, toast, Zoom } from "react-toastify";
-import { postCreateUsers } from "../../../services/apiServices";
+import { putUpdateUsers } from "../../../services/apiServices";
 import _ from "lodash";
 
 const ModalUpdateUser = (props) => {
@@ -18,6 +18,7 @@ const ModalUpdateUser = (props) => {
     setRole("USER");
     setImage("");
     setReviewImg("");
+    props.resetUpdateData();
   };
 
   const [email, setEmail] = useState("");
@@ -50,6 +51,7 @@ const ModalUpdateUser = (props) => {
     } else {
     }
   };
+
   const validateEmail = (email) => {
     return String(email)
       .toLowerCase()
@@ -57,20 +59,15 @@ const ModalUpdateUser = (props) => {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
   };
-  const handleSubmitCreateUser = async () => {
-    //Validate
+
+  const handleSubmitUpdateUser = async () => {
     const isValidEmail = validateEmail(email);
     if (!isValidEmail) {
       toast.error("Invalid email");
       return;
     }
 
-    if (!password) {
-      toast.error("Invalid password");
-      return;
-    }
-
-    let data = await postCreateUsers(email, password, userName, role, image);
+    let data = await putUpdateUsers(dataUpdate.id, userName, role, image);
 
     //Show error or success toast message
     if (data && data.EC === 0) {
@@ -106,15 +103,10 @@ const ModalUpdateUser = (props) => {
                 onChange={(event) => setEmail(event.target.value)}
               />
             </div>
-            {/* <div className="col-md-6">
+            <div className="col-md-6">
               <label className="form-label">Password</label>
-              <input
-                type="password"
-                className="form-control"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-              />
-            </div> */}
+              <input type="password" className="form-control" disabled />
+            </div>
             <div className="col-md-6">
               <label className="form-label">UserName</label>
               <input
@@ -165,7 +157,7 @@ const ModalUpdateUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmitCreateUser()}>
+          <Button variant="primary" onClick={() => handleSubmitUpdateUser()}>
             Save
           </Button>
         </Modal.Footer>
