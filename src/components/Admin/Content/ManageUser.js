@@ -1,14 +1,20 @@
-import ModalCreateUser from "./ModalCreateUser";
 import "./ManageUser.scss";
 import { MdPlusOne } from "react-icons/md";
 import TableUser from "./TableUser";
 import { useEffect, useState } from "react";
 import { getAllUsers } from "../../../services/apiServices";
+import ModalCreateUser from "./ModalCreateUser";
 import ModalUpdateUser from "./ModalUpdateUser";
+import ModalViewUser from "./ModalViewUser";
+import ModalDeleteUser from "./ModalDeleteUser";
 
 const ManageUser = (props) => {
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
   const [showModalUpdateUser, setshowModalUpdateUser] = useState(false);
+  const [showModalViewUser, setshowModalViewUser] = useState(false);
+  const [showModalDeleteUser, setshowModalDeleteUser] = useState(false);
+
+  const [dataDetail, setdataDetail] = useState({});
   const [dataUpdate, setDataUpdate] = useState({});
   const [listUsers, setListUsers] = useState([]);
   //ComponentDidMount
@@ -29,8 +35,22 @@ const ManageUser = (props) => {
     setDataUpdate(user);
   };
 
+  const handleClickBtnView = (user) => {
+    setshowModalViewUser(true);
+    setdataDetail(user);
+  };
+
+  const handleClickBtnDelete = (user) => {
+    setshowModalDeleteUser(true);
+    setdataDetail(user);
+  };
+
   const resetUpdateData = () => {
     setDataUpdate({});
+  };
+
+  const resetDetailData = () => {
+    setdataDetail({});
   };
 
   return (
@@ -49,6 +69,8 @@ const ManageUser = (props) => {
           <TableUser
             listUsers={listUsers}
             handleClickBtnUpdate={handleClickBtnUpdate}
+            handleClickBtnView={handleClickBtnView}
+            handleClickBtnDelete={handleClickBtnDelete}
           />
         </div>
         <ModalCreateUser
@@ -62,6 +84,18 @@ const ManageUser = (props) => {
           dataUpdate={dataUpdate}
           fetchListUser={fetchListUser}
           resetUpdateData={resetUpdateData}
+        />
+        <ModalViewUser
+          show={showModalViewUser}
+          setShow={setshowModalViewUser}
+          dataDetail={dataDetail}
+          resetDetailData={resetDetailData}
+        />
+        <ModalDeleteUser
+          show={showModalDeleteUser}
+          setShow={setshowModalDeleteUser}
+          dataDetail={dataDetail}
+          fetchListUser={fetchListUser}
         />
       </div>
     </div>
