@@ -1,16 +1,39 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import * as React from "react";
+import * as ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import User from "./components/User/User";
+import Admin from "./components/Admin/Admin";
+import HomePage from "./components/Home/HomePage";
+import ManageUser from "./components/Admin/Content/ManageUser";
+import Dashboard from "./components/Admin/Content/Dashboard";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    {/* <React.StrictMode> */}
+    <BrowserRouter>
+      <Routes>
+        {/* Tránh hàm event.preventDefault của tag a cổ điển - ko gây load trang */}
+        <Route path="/" element={<App />}>
+          {/* Index Route để chỉ định component default */}
+          <Route index element={<HomePage />} />
+
+          {/* Nested route */}
+          <Route path="/users" element={<User />} />
+        </Route>
+
+        <Route path="/admins" element={<Admin />}>
+          <Route index element={<Dashboard />} />
+          <Route path="manage-users" element={<ManageUser />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+    {/* </React.StrictMode> */}
   </Provider>
 );
 

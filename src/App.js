@@ -1,38 +1,32 @@
-import logo from "./logo.svg";
 import "./App.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { increaseCounter, decreaseCounter } from "./redux/action/counterAction";
-import MyComponent from "./components/MyComponent";
-import React from "react";
+import Header from "./components/Header/Header";
+import { Outlet, Link } from "react-router-dom";
 
-class App extends React.Component {
-  render() {
-    return (
-      <div className="app-container">
-        Hello world
-        <MyComponent></MyComponent>
+const App = () => {
+  return (
+    <div className="app-container">
+      {/* Dùng Outlet để vẫn giữ thằng cha nhưng render thêm thằng con */}
+      <div className="header-container">
+        <Header />
       </div>
-    );
-  }
-}
-
-// const App = () => {
-//   const count = useSelector((state) => state.counter.count);
-//   const dispatch = useDispatch();
-
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//           <p>MINH TRI DEP TRAI 123</p>
-//         </p>
-//         <div>Count = {count}</div>
-//         <button onClick={() => dispatch(increaseCounter())}>Increase</button>
-//         <button onClick={() => dispatch(decreaseCounter())}>Decrease</button>
-//       </header>
-//     </div>
-//   );
-// };
+      <div className="main-container">
+        <div className="sidenav-container"></div>
+      </div>
+      <div className="app-content">
+        <Outlet />
+      </div>
+      {/* <div>
+        test link
+        <div>
+          <button>
+            <Link to="/users">Go To User Page</Link>
+          </button>
+          <button>
+            <Link to="/admins">Go To Admin Page</Link>
+          </button>
+        </div>
+      </div> */}
+    </div>
+  );
+};
 export default App;
