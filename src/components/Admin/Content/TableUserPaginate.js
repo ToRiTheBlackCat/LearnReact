@@ -5,11 +5,11 @@ import ReactPaginate from "react-paginate";
 
 const TableUserPaginate = (props) => {
   const { listUsers, pageCount } = props;
-  //   const [pageCount, setPageCount] = useState(0);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
     props.fetchListUserWithPaginate(+event.selected + 1); //Convert into int
+    props.setCurrentPage(+event.selected + 1); //Update current page when click
     console.log(`User requested page number ${event.selected}`);
   };
 
@@ -85,6 +85,7 @@ const TableUserPaginate = (props) => {
           containerClassName="pagination"
           activeClassName="active"
           renderOnZeroPageCount={null}
+          forcePage={props.currentPage - 1} //To move back to the first page after delete -1 because index start from 0
         />
       </div>
     </>
