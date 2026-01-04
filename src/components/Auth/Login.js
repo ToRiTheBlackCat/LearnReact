@@ -2,9 +2,13 @@ import { useState } from "react";
 import "./Login.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import { postLogin } from "../../services/apiServices";
+
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const validateEmail = (email) => {
     return String(email)
@@ -14,7 +18,11 @@ const Login = (props) => {
       );
   };
 
-  const handleLogin = () => {
+  const handleGoBackHomePage = () => {
+    navigate("/");
+  };
+
+  const handleLogin = async () => {
     //Validate
     if (!email) {
       toast.error("Email is required");
@@ -30,11 +38,25 @@ const Login = (props) => {
       toast.error("Invalid email format");
       return;
     }
+
+    //Handle
+    let res = await postLogin(email, password);
+
+    //Show error or success toast message
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
+      navigate("/");
+    } else if (res && res.EC !== 0) {
+      toast.error(res.EM);
+    }
   };
 
   return (
     <div className="login-container">
-      <div className="header">Don't have an account yet?</div>
+      <div className="header">
+        <span>Don't have an account yet?</span>
+        <button>Sign Up</button>
+      </div>
       <div className="title col-4 mx-auto">MINH TRI</div>
       <div className="welcome col-4 mx-auto">Hello, who's this?</div>
       <div className="content-form col-4 mx-auto">
@@ -62,20 +84,10 @@ const Login = (props) => {
             Login
           </button>
         </div>
+        <div className="text-center back">
+          <span onClick={() => handleGoBackHomePage()}>👈 Go to homepage</span>
+        </div>
       </div>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
     </div>
   );
 };

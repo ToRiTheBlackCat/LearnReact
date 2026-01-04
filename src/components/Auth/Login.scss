@@ -1,8 +1,22 @@
 .login-container{
     .header{
         height: 45px;
-        text-align: right   ;
-        border: 1px solid red;
+        text-align: right;
+        padding: 10px  100px 0;
+
+        button{
+            padding: 3px 15px;
+            margin-left: 15px;
+            border-radius: 5px;
+            background: white;
+            border: 1px solid;
+        }
+
+        button:hover{
+            cursor: pointer;
+            background-color: black;
+            color: white;
+        }
     }
     .title{
         font-size: 25px;
@@ -29,6 +43,17 @@
             border-radius: 5px;
             color: white;
             background-color: black;
+        }
+
+        button:hover{
+            cursor: pointer;
+            font-weight: 500;
+            border: 1px solid;
+        }
+
+        .back:hover{
+            cursor: pointer;
+            font-weight: 500;
         }
     }
 }
