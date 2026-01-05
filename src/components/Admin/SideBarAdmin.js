@@ -11,7 +11,12 @@ const SideBarAdmin = ({ collapsed }) => {
         <li>
           <Link to="/admins/manage-users">User</Link>
         </li>
-        <li>Settings</li>
+        <li>
+          <Link to="/admins/quiz">Quiz</Link>
+        </li>
+        <li>
+          <Link to="/admins/questions">Questions</Link>
+        </li>
       </ul>
     </div>
   );

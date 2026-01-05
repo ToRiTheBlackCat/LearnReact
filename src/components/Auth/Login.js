@@ -2,9 +2,15 @@ import { useState } from "react";
 import "./Login.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import { postLogin } from "../../services/apiServices";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isShowPassword, setIsShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const validateEmail = (email) => {
     return String(email)
@@ -14,7 +20,15 @@ const Login = (props) => {
       );
   };
 
-  const handleLogin = () => {
+  const handleGoBackHomePage = () => {
+    navigate("/");
+  };
+
+  const handleSignup = () => {
+    navigate("/register");
+  };
+
+  const handleLogin = async () => {
     //Validate
     if (!email) {
       toast.error("Email is required");
@@ -30,12 +44,32 @@ const Login = (props) => {
       toast.error("Invalid email format");
       return;
     }
+
+    //Handle
+    let res = await postLogin(email, password);
+
+    //Show error or success toast message
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
+      //Check role and navigate
+      if (res.DT.role === "ADMIN") {
+        navigate("/admins");
+        return;
+      }
+
+      navigate("/");
+    } else if (res && res.EC !== 0) {
+      toast.error(res.EM);
+    }
   };
 
   return (
     <div className="login-container">
-      <div className="header">Don't have an account yet?</div>
-      <div className="title col-4 mx-auto">MINH TRI</div>
+      <div className="header">
+        <span>Don't have an account yet?</span>
+        <button onClick={() => handleSignup()}>Sign Up</button>
+      </div>
+      <div className="title col-4 mx-auto">MINH TRI Website</div>
       <div className="welcome col-4 mx-auto">Hello, who's this?</div>
       <div className="content-form col-4 mx-auto">
         <div className="form-group">
@@ -50,11 +84,17 @@ const Login = (props) => {
         <div className="form-group">
           <label>Password</label>
           <input
-            type={"password"}
+            type={isShowPassword ? "text" : "password"}
             className="form-control"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
+          <span
+            className="icon-eye"
+            onClick={() => setIsShowPassword(!isShowPassword)}
+          >
+            {isShowPassword ? <FaEye /> : <FaEyeSlash />}
+          </span>
         </div>
         <span className="forgot-password">Forgot your password?</span>
         <div>
@@ -62,20 +102,10 @@ const Login = (props) => {
             Login
           </button>
         </div>
+        <div className="text-center back">
+          <span onClick={() => handleGoBackHomePage()}>👈 Go to homepage</span>
+        </div>
       </div>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
     </div>
   );
 };
