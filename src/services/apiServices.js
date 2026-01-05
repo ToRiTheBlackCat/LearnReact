@@ -37,6 +37,18 @@ const postLogin = (email, password) => {
   return axios.post("api/v1/login", { email, password }); //x-www-form-urlencoded
 };
 
+const postRegister = (email, password, username) => {
+  const trimmedEmail = email.trim();
+  const trimmedUsername = username.trim();
+  const trimmedPassword = password.trim();
+
+  return axios.post("api/v1/register", {
+    email: trimmedEmail,
+    username: trimmedUsername,
+    password: trimmedPassword,
+  }); //x-www-form-urlencoded
+};
+
 export {
   postCreateUsers,
   getAllUsers,
@@ -44,4 +56,5 @@ export {
   deleteUsers,
   getUsersWithPaginate,
   postLogin,
+  postRegister,
 };

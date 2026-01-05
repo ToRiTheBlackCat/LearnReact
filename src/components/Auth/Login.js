@@ -4,10 +4,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { postLogin } from "../../services/apiServices";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isShowPassword, setIsShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const validateEmail = (email) => {
@@ -20,6 +22,10 @@ const Login = (props) => {
 
   const handleGoBackHomePage = () => {
     navigate("/");
+  };
+
+  const handleSignup = () => {
+    navigate("/register");
   };
 
   const handleLogin = async () => {
@@ -45,6 +51,12 @@ const Login = (props) => {
     //Show error or success toast message
     if (res && res.EC === 0) {
       toast.success(res.EM);
+      //Check role and navigate
+      if (res.DT.role === "ADMIN") {
+        navigate("/admins");
+        return;
+      }
+
       navigate("/");
     } else if (res && res.EC !== 0) {
       toast.error(res.EM);
@@ -55,9 +67,9 @@ const Login = (props) => {
     <div className="login-container">
       <div className="header">
         <span>Don't have an account yet?</span>
-        <button>Sign Up</button>
+        <button onClick={() => handleSignup()}>Sign Up</button>
       </div>
-      <div className="title col-4 mx-auto">MINH TRI</div>
+      <div className="title col-4 mx-auto">MINH TRI Website</div>
       <div className="welcome col-4 mx-auto">Hello, who's this?</div>
       <div className="content-form col-4 mx-auto">
         <div className="form-group">
@@ -72,11 +84,17 @@ const Login = (props) => {
         <div className="form-group">
           <label>Password</label>
           <input
-            type={"password"}
+            type={isShowPassword ? "text" : "password"}
             className="form-control"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
+          <span
+            className="icon-eye"
+            onClick={() => setIsShowPassword(!isShowPassword)}
+          >
+            {isShowPassword ? <FaEye /> : <FaEyeSlash />}
+          </span>
         </div>
         <span className="forgot-password">Forgot your password?</span>
         <div>
