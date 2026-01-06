@@ -5,11 +5,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { postLogin } from "../../services/apiServices";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import userReducer from "../../redux/reducer/userReducer";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const validateEmail = (email) => {
@@ -50,6 +53,11 @@ const Login = (props) => {
 
     //Show error or success toast message
     if (res && res.EC === 0) {
+      dispatch({
+        type: "FETCH_USER_LOGIN_SUCCESS",
+        payload: res.DT,
+      }); //dispatch action to redux
+
       toast.success(res.EM);
       //Check role and navigate
       if (res.DT.role === "ADMIN") {

@@ -30,3 +30,8 @@ const App = () => {
   );
 };
 export default App;
+
+//Steps to use Redux
+//1. Initialize dispatch + actions
+//2. Initialize reducer + logic
+//3. Use state of Redux
