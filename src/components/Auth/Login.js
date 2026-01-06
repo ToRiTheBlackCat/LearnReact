@@ -7,6 +7,7 @@ import { postLogin } from "../../services/apiServices";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import userReducer from "../../redux/reducer/userReducer";
+import { doLogin } from "../../redux/action/userAction";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -49,25 +50,22 @@ const Login = (props) => {
     }
 
     //Handle
-    let res = await postLogin(email, password);
+    let data = await postLogin(email, password);
 
     //Show error or success toast message
-    if (res && res.EC === 0) {
-      dispatch({
-        type: "FETCH_USER_LOGIN_SUCCESS",
-        payload: res.DT,
-      }); //dispatch action to redux
+    if (data && data.EC === 0) {
+      dispatch(doLogin(data)); //dispatch userAction to redux
 
-      toast.success(res.EM);
+      toast.success(data.EM);
       //Check role and navigate
-      if (res.DT.role === "ADMIN") {
+      if (data.DT.role === "ADMIN") {
         navigate("/admins");
         return;
       }
 
       navigate("/");
-    } else if (res && res.EC !== 0) {
-      toast.error(res.EM);
+    } else if (data && data.EC !== 0) {
+      toast.error(data.EM);
     }
   };
 
