@@ -5,11 +5,17 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { postLogin } from "../../services/apiServices";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { doLogin } from "../../redux/action/userAction";
+import { ImSpinner } from "react-icons/im";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const validateEmail = (email) => {
@@ -45,21 +51,27 @@ const Login = (props) => {
       return;
     }
 
+    // --- START LOADING ---
+    setIsLoading(true);
+
     //Handle
-    let res = await postLogin(email, password);
+    let data = await postLogin(email, password);
 
     //Show error or success toast message
-    if (res && res.EC === 0) {
-      toast.success(res.EM);
+    if (data && data.EC === 0) {
+      dispatch(doLogin(data)); //dispatch userAction to redux
+
+      toast.success(data.EM);
       //Check role and navigate
-      if (res.DT.role === "ADMIN") {
+      if (data.DT.role === "ADMIN") {
         navigate("/admins");
         return;
       }
-
+      setIsLoading(false);
       navigate("/");
-    } else if (res && res.EC !== 0) {
-      toast.error(res.EM);
+    } else if (data && data.EC !== 0) {
+      toast.error(data.EM);
+      setIsLoading(false);
     }
   };
 
@@ -98,8 +110,14 @@ const Login = (props) => {
         </div>
         <span className="forgot-password">Forgot your password?</span>
         <div>
-          <button className="btn-submit" onClick={() => handleLogin()}>
-            Login
+          <button
+            className="btn-submit"
+            onClick={() => handleLogin()}
+            disabled={isLoading} // <--- This activates your CSS
+          >
+            {/* Only show spinner if loading is true */}
+            {isLoading === true && <ImSpinner className="loaderIcon" />}
+            <span> Login</span>
           </button>
         </div>
         <div className="text-center back">
