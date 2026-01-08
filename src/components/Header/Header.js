@@ -3,10 +3,12 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { doLogout } from "../../redux/action/userAction";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const account = useSelector((state) => state.user.account);
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
@@ -19,6 +21,11 @@ const Header = () => {
 
   const handleSignup = () => {
     navigate("/register");
+  };
+
+  const handleLogOut = () => {
+    dispatch(doLogout());
+    navigate("/login");
   };
 
   return (
@@ -60,7 +67,9 @@ const Header = () => {
             ) : (
               <>
                 <NavDropdown title="Setting" id="basic-nav-dropdown">
-                  <NavDropdown.Item>Log out</NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => handleLogOut()}>
+                    Log out
+                  </NavDropdown.Item>
                   <NavDropdown.Item>Profile</NavDropdown.Item>
                 </NavDropdown>
               </>

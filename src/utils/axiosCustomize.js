@@ -1,5 +1,6 @@
 import axios from "axios";
 import NProgress from "nprogress";
+import { store } from "../redux/store";
 
 NProgress.configure({
   showSpinner: false,
@@ -13,6 +14,12 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // Do something before the request is sent
+    console.log("Store from axios: ", store.getState());
+    //Get token from redux store
+    const access_token = store?.getState()?.user?.account?.access_token;
+    config.headers["Authorization"] = `Bearer ${access_token}`;
+
+    //Loading progress bar
     NProgress.start();
     return config;
   },
