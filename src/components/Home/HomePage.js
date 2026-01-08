@@ -1,6 +1,10 @@
+import { useSelector } from "react-redux";
 import videoHomepage from "../../assets/video-homepage.mp4";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = (props) => {
+  const isAutheticated = useSelector((state) => state.user.isAuthenticated);
+  const navigate = useNavigate();
   return (
     <div className="homepage-container">
       {/* Theo trải nghiệm người dùng nên muốn video tự chạy
@@ -15,9 +19,21 @@ const HomePage = (props) => {
           one. Create a typeform instead-and make everyon happy
         </div>
         <div>
-          <button className="getStarted-button">
-            Get's started. It's free
-          </button>
+          {isAutheticated ? (
+            <button
+              className="getStarted-button"
+              onClick={() => navigate("/users")}
+            >
+              Doing Quiz now
+            </button>
+          ) : (
+            <button
+              className="getStarted-button"
+              onClick={() => navigate("/login")}
+            >
+              Get's started. It's free
+            </button>
+          )}
         </div>
       </div>
     </div>
