@@ -33,10 +33,16 @@ const ListQuiz = (props) => {
                 <div className="card-body">
                   <h5 className="card-title">{index + 1}</h5>
                   <p className="card-text">{quiz.description}</p>
+
+                  {/* Truyền state khi navigate thông qua object - Hứng bên kia thì dùng useLocation và location.state */}
                   <button
                     href="#"
                     className="btn btn-primary"
-                    onClick={() => navigate(`/quiz/${quiz.id}`)}
+                    onClick={() =>
+                      navigate(`/quiz/${quiz.id}`, {
+                        state: { quizTitle: quiz.description },
+                      })
+                    }
                   >
                     Start now
                   </button>
