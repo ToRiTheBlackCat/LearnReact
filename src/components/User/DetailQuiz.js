@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, data } from "react-router-dom";
 import { getDataQuiz } from "../../services/apiServices";
 import _ from "lodash";
 import "./DetailQuiz.scss";
@@ -56,6 +56,8 @@ const DetailQuiz = () => {
               questionDescription = item.description;
               image = item.image;
             }
+            // set answered flag
+            item.answers.isSelected = false;
 
             //Push các câu trả lời vào mảng answers
             answers.push(item.answers);
@@ -83,6 +85,46 @@ const DetailQuiz = () => {
   const handleNext = () => {
     if (dataQuiz && dataQuiz.length > index + 1) setIndex(index + 1);
   };
+
+  const handleCheckbox = (answerId, questionId) => {
+    //Clone data quiz using lodahs and cloneDeep func
+    let dataQuizClone = _.cloneDeep(dataQuiz);
+
+    //Find question that has answers updated
+    let question = dataQuizClone.find(
+      (item) => +item.questionId === +questionId,
+    );
+
+    //Loop to find ans
+    if (question && question.answers) {
+      // Create temp list to update ans
+      let b = question.answers.map((item) => {
+        //If found
+        if (+item.id === +answerId) {
+          //Checked - set to True
+          item.isSelected = !item.isSelected;
+          console.log("Ischecked");
+        }
+        return item;
+      });
+      //Set temp to answer that updated again
+      question.answers = b;
+      console.log(b);
+    }
+
+    //Find updated index
+    let index = dataQuizClone.findIndex(
+      (item) => +item.questionId === +questionId,
+    );
+    //If found > -1
+    if (index > -1) {
+      //set again to question that updated
+      dataQuizClone[index] = question;
+      //set to real dataQuiz with React
+      setDataQuiz(dataQuizClone);
+      console.log("New data updated:", dataQuizClone);
+    }
+  };
   return (
     <div className="detail-quiz-container">
       <div className="left-content">
@@ -91,20 +133,24 @@ const DetailQuiz = () => {
         </div>
         <hr />
         <div className="q-body">
-          <img />
+          <div className="q-content">
+            <Question
+              index={index}
+              handleCheckbox={handleCheckbox}
+              data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
+            />
+          </div>
         </div>
-        <div className="q-content">
-          <Question
-            index={index}
-            data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
-          />
-        </div>
+
         <div className="footer">
           <button className="btn btn-primary" onClick={() => handlePrev()}>
             Prev
           </button>
           <button className="btn btn-success" onClick={() => handleNext()}>
             Next
+          </button>
+          <button className="btn btn-warning" onClick={() => handleNext()}>
+            Finish
           </button>
         </div>
         <div></div>
