@@ -3,11 +3,14 @@ import { useParams, useLocation } from "react-router-dom";
 import { getDataQuiz } from "../../services/apiServices";
 import _ from "lodash";
 import "./DetailQuiz.scss";
+import Question from "./Question";
 
 const DetailQuiz = () => {
   const params = useParams();
   const location = useLocation();
   const [quizTitle, setQuizTitle] = useState("");
+  const [dataQuiz, setDataQuiz] = useState([]);
+  const [index, setIndex] = useState(0);
 
   // useEffect(() => {
   //   if (location && location.state && location.state.quizTitle) {
@@ -56,7 +59,7 @@ const DetailQuiz = () => {
 
             //Push các câu trả lời vào mảng answers
             answers.push(item.answers);
-            console.log("check item answer: ", item.answers);
+            // console.log("check item answer: ", item.answers);
           });
           return {
             questionId: key,
@@ -68,9 +71,18 @@ const DetailQuiz = () => {
         .value();
 
       console.log("check data group by id: ", data);
+      setDataQuiz(data);
     }
   };
 
+  const handlePrev = () => {
+    if (index - 1 < 0) return;
+    setIndex(index - 1);
+  };
+
+  const handleNext = () => {
+    if (dataQuiz && dataQuiz.length > index + 1) setIndex(index + 1);
+  };
   return (
     <div className="detail-quiz-container">
       <div className="left-content">
@@ -82,17 +94,18 @@ const DetailQuiz = () => {
           <img />
         </div>
         <div className="q-content">
-          <div className="question">Question Content</div>
-          <div className="answer">
-            <div>A. 1</div>
-            <div>B. 1</div>
-            <div>C. 1</div>
-            <div>D. 1</div>
-          </div>
+          <Question
+            index={index}
+            data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
+          />
         </div>
         <div className="footer">
-          <button className="btn btn-primary">Prev</button>
-          <button className="btn btn-success">Next</button>
+          <button className="btn btn-primary" onClick={() => handlePrev()}>
+            Prev
+          </button>
+          <button className="btn btn-success" onClick={() => handleNext()}>
+            Next
+          </button>
         </div>
         <div></div>
       </div>
