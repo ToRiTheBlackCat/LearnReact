@@ -23,7 +23,6 @@ const DetailQuiz = () => {
   useEffect(() => {
     if (location && location.state && location.state.quizTitle) {
       setQuizTitle(location.state.quizTitle);
-      console.log("check quiz title: ", location.state.quizTitle);
     }
 
     fetchQuizDetail();
@@ -34,9 +33,6 @@ const DetailQuiz = () => {
     const res = await getDataQuiz(id);
 
     if (res && res.EC === 0) {
-      //   setArrQuiz(res.DT);
-      console.log("check detail quiz data: ", res);
-
       let raw = res.DT;
       let data = _.chain(raw) //Dùng thư viện lodash
         // Group the elements of Array based on `id` property
@@ -61,7 +57,6 @@ const DetailQuiz = () => {
 
             //Push các câu trả lời vào mảng answers
             answers.push(item.answers);
-            // console.log("check item answer: ", item.answers);
           });
           return {
             questionId: key,
@@ -71,8 +66,6 @@ const DetailQuiz = () => {
           };
         })
         .value();
-
-      console.log("check data group by id: ", data);
       setDataQuiz(data);
     }
   };
@@ -88,6 +81,7 @@ const DetailQuiz = () => {
 
   const handleCheckbox = (answerId, questionId) => {
     //Clone data quiz using lodahs and cloneDeep func
+    //React hook doesn't merge state
     let dataQuizClone = _.cloneDeep(dataQuiz);
 
     //Find question that has answers updated
@@ -103,13 +97,11 @@ const DetailQuiz = () => {
         if (+item.id === +answerId) {
           //Checked - set to True
           item.isSelected = !item.isSelected;
-          console.log("Ischecked");
         }
         return item;
       });
       //Set temp to answer that updated again
       question.answers = b;
-      console.log(b);
     }
 
     //Find updated index
@@ -122,7 +114,45 @@ const DetailQuiz = () => {
       dataQuizClone[index] = question;
       //set to real dataQuiz with React
       setDataQuiz(dataQuizClone);
-      console.log("New data updated:", dataQuizClone);
+    }
+  };
+
+  const handleFinishQuiz = () => {
+    console.log("Check data before submit", dataQuiz);
+    // {
+    //     "quizId": 1,
+    //     "answers": [
+    //         {
+    //             "questionId": 1,
+    //             "userAnswerId": [3]
+    //         },
+    //         {
+    //             "questionId": 2,
+    //             "userAnswerId": [6]
+    //         }
+    //     ]
+    // }
+    let payload = { quizId: +id, answers: [] };
+    let answers = [];
+    if (dataQuiz && dataQuiz.length > 0) {
+      dataQuiz.forEach((item) => {
+        let questionId = item.questionId;
+        let userAnswerId = [];
+
+        //Todo : userAnswerId
+        item.answers.forEach((ans) => {
+          if (ans.isSelected) {
+            userAnswerId.push(ans.id);
+          }
+        });
+        answers.push({
+          questionId: +questionId,
+          userAnswerId: userAnswerId,
+        });
+      });
+
+      payload.answers = answers;
+      console.log("final ans:", payload);
     }
   };
   return (
@@ -149,14 +179,17 @@ const DetailQuiz = () => {
           <button className="btn btn-success" onClick={() => handleNext()}>
             Next
           </button>
-          <button className="btn btn-warning" onClick={() => handleNext()}>
+          <button
+            className="btn btn-warning"
+            onClick={() => handleFinishQuiz()}
+          >
             Finish
           </button>
         </div>
         <div></div>
       </div>
 
-      <div className="right-content">Cound down</div>
+      <div className="right-content">Count down</div>
     </div>
   );
 };
