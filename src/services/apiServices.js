@@ -61,6 +61,16 @@ const getDataQuiz = (id) => {
 const postSubmitQuiz = (data) => {
   return axios.post(`api/v1/quiz-submit`, { ...data }); //Because require body json
 };
+
+const postCreateNewQuiz = (description, name, difficulty, quizImage) => {
+  //Submit data
+  const data = new FormData();
+  data.append("description", description);
+  data.append("name", name);
+  data.append("difficulty", difficulty);
+  data.append("quizImage", quizImage);
+  return axios.post("api/v1/quiz", data); //form-data
+};
 export {
   postCreateUsers,
   getAllUsers,
@@ -72,4 +82,5 @@ export {
   getQuizByUser,
   getDataQuiz,
   postSubmitQuiz,
+  postCreateNewQuiz,
 };
