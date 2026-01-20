@@ -13,8 +13,6 @@ const instance = axios.create({
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
-    // Do something before the request is sent
-    console.log("Store from axios: ", store.getState());
     //Get token from redux store
     const access_token = store?.getState()?.user?.account?.access_token;
     config.headers["Authorization"] = `Bearer ${access_token}`;
@@ -26,7 +24,7 @@ instance.interceptors.request.use(
   function (error) {
     // Do something with the request error
     return Promise.reject(error);
-  }
+  },
 );
 
 // Add a response interceptor
@@ -44,7 +42,7 @@ instance.interceptors.response.use(
     return error && error.response && error.response.data
       ? error.response.data
       : Promise.reject(error);
-  }
+  },
 );
 
 export default instance;
