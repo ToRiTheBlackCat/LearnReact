@@ -1,6 +1,7 @@
 import SideBarAdmin from "./SideBarAdmin";
 import { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
+import PerfectScrollbar from "react-perfect-scrollbar";
 import "./Admin.scss";
 const Admin = () => {
   return (
@@ -10,9 +11,11 @@ const Admin = () => {
       </div>
       <div className="admin-content">
         {/* <div className="admin-header"></div> */}
-        <div className="admin-main">
-          <Outlet />
-        </div>
+        <PerfectScrollbar>
+          <div className="admin-main">
+            <Outlet />
+          </div>
+        </PerfectScrollbar>
       </div>
     </div>
   );
