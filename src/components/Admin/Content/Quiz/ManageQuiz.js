@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ManageQuiz.scss";
 import Select from "react-select";
 import { postCreateNewQuiz } from "../../../../services/apiServices";
 import { toast } from "react-toastify";
 import TableQuiz from "./TableQuiz";
 import Accordion from "react-bootstrap/Accordion";
+import { getAllQuizForAdmin } from "../../../../services/apiServices";
+import { MdDriveFolderUpload } from "react-icons/md";
 
 const options = [
   { value: "EASY", label: "EASY" },
@@ -16,11 +18,31 @@ const ManageQuiz = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("EASY");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
+  const [listQuiz, setListQuiz] = useState([]);
+  const [reviewImg, setReviewImg] = useState("");
+
+  useEffect(() => {
+    fetchQuiz();
+  }, []);
+
+  const fetchQuiz = async () => {
+    let res = await getAllQuizForAdmin();
+    console.log("Res of API", res);
+    if (res && res.EC === 0) {
+      setListQuiz(res.DT);
+    }
+  };
 
   const handleChangeFile = (event) => {
-    if (event.target && event.target.files && event.target.files[0])
-      setImage(event.target.files[0]);
+    const file = event.target.files[0];
+
+    if (file) {
+      console.log("upload file", file);
+      const imgUrl = URL.createObjectURL(file);
+      setReviewImg(imgUrl);
+      setImage(file);
+    }
   };
 
   const handleSubmitQuiz = async (event) => {
@@ -37,6 +59,10 @@ const ManageQuiz = () => {
       setName("");
       setDescription("");
       setImage(null);
+      setReviewImg(null);
+
+      //Call data
+      await fetchQuiz();
     } else {
       toast.error(res.EM);
     }
@@ -49,7 +75,7 @@ const ManageQuiz = () => {
         <Accordion.Item eventKey="1">
           <Accordion.Header>Manage Quizzes</Accordion.Header>
           <Accordion.Body>
-            <div className="add-new">
+            <div className="add-new-quiz">
               <fieldset className="border rounded-3 p-3">
                 <legend className="float-none w-auto px-3">Add new Quiz</legend>
                 <div className="form-floating mb-3">
@@ -83,11 +109,26 @@ const ManageQuiz = () => {
                 </div>
 
                 <div className="more-actions form-group">
-                  <label className="mb-1">Upload image</label>
+                  <label
+                    className="image-upload mb-1"
+                    htmlFor="imageUpload"
+                    // onChange={(event) => setImage(event.target.value)}
+                  >
+                    <MdDriveFolderUpload />
+                    Upload image
+                  </label>
                   <input
                     type="file"
+                    id="imageUpload"
+                    hidden
                     className="form-control"
                     onChange={(event) => handleChangeFile(event)}
+                  />
+                </div>
+                <div className="col-md-12 img-preview">
+                  <img
+                    src={reviewImg ? reviewImg : <span>Preview image</span>}
+                    alt="preview image"
                   />
                 </div>
                 <div className="mt-3">
@@ -106,7 +147,7 @@ const ManageQuiz = () => {
       <hr />
 
       <div className="list-detail">
-        <TableQuiz />
+        <TableQuiz listQuiz={listQuiz} />
       </div>
     </div>
   );

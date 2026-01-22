@@ -1,20 +1,8 @@
 import { useEffect, useState } from "react";
-import { getAllQuizForAdmin } from "../../../../services/apiServices";
+import ReactPaginate from "react-paginate";
 
 const TableQuiz = (props) => {
-  const [listQuiz, setListQuiz] = useState([]);
-
-  useEffect(() => {
-    fetchQuiz();
-  }, []);
-
-  const fetchQuiz = async () => {
-    let res = await getAllQuizForAdmin();
-    console.log("Res of API", res);
-    if (res && res.EC === 0) {
-      setListQuiz(res.DT);
-    }
-  };
+  const { listQuiz } = props;
 
   return (
     <>

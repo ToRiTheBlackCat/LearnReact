@@ -9,4 +9,35 @@
   legend {
     font-size: 20px;
   }
+  .add-new-quiz {
+    .image-upload {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      width: fit-content;
+      padding: 3px 10px;
+      background: #eeeeee;
+      cursor: pointer;
+      border-radius: 5px;
+
+      &:hover {
+        background: rgba(156, 148, 150, 0.8);
+      }
+    }
+
+    .img-preview {
+      border: 1px dashed #ccc;
+      height: 150px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ccc;
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+  }
 }
