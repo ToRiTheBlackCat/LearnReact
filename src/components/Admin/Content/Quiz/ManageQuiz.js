@@ -7,6 +7,7 @@ import TableQuiz from "./TableQuiz";
 import Accordion from "react-bootstrap/Accordion";
 import { getAllQuizForAdmin } from "../../../../services/apiServices";
 import { MdDriveFolderUpload } from "react-icons/md";
+import ModalUpdateQuiz from "./ModalUpdateQuiz";
 
 const options = [
   { value: "EASY", label: "EASY" },
@@ -21,6 +22,9 @@ const ManageQuiz = () => {
   const [image, setImage] = useState("");
   const [listQuiz, setListQuiz] = useState([]);
   const [reviewImg, setReviewImg] = useState("");
+
+  const [showModalUpdateQuiz, setShowModalUpdateQuiz] = useState(false);
+  const [dataUpdate, setDataUpdate] = useState({});
 
   useEffect(() => {
     fetchQuiz();
@@ -66,6 +70,16 @@ const ManageQuiz = () => {
     } else {
       toast.error(res.EM);
     }
+  };
+
+  const handleClickBtnEdit = (quiz) => {
+    setShowModalUpdateQuiz(true);
+    setDataUpdate(quiz);
+    console.log("Data update in Modal Update Quiz", quiz);
+  };
+
+  const resetUpdateData = () => {
+    setDataUpdate({});
   };
 
   return (
@@ -147,8 +161,19 @@ const ManageQuiz = () => {
       <hr />
 
       <div className="list-detail">
-        <TableQuiz listQuiz={listQuiz} />
+        <TableQuiz
+          listQuiz={listQuiz}
+          fetchQuiz={fetchQuiz}
+          handleClickBtnEdit={handleClickBtnEdit}
+        />
       </div>
+      <ModalUpdateQuiz
+        show={showModalUpdateQuiz}
+        setShow={setShowModalUpdateQuiz}
+        dataUpdate={dataUpdate}
+        fetchQuiz={fetchQuiz}
+        resetUpdateData={resetUpdateData}
+      />
     </div>
   );
 };
