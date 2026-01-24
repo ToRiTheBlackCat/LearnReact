@@ -39,7 +39,12 @@ const TableQuiz = (props) => {
                     >
                       Edit
                     </button>
-                    <button className="btn btn-danger mx-2">Delete</button>
+                    <button
+                      className="btn btn-danger mx-2"
+                      onClick={() => props.handleClickBtnDelete(item)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               );

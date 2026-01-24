@@ -5,6 +5,8 @@ import Select from "react-select";
 import _ from "lodash";
 import "./ModalUpdateQuiz.scss";
 import { MdDriveFolderUpload } from "react-icons/md";
+import { toast } from "react-toastify";
+import { putQuiz } from "../../../../services/apiServices";
 
 const options = [
   { value: "EASY", label: "EASY" },
@@ -25,7 +27,7 @@ const ModalUpdateQuiz = (props) => {
       setName(dataUpdate.name);
       setDescription(dataUpdate.description);
       let defaultType = options.find(
-        (item) => item.value === dataUpdate.difficulty,
+        (item) => item.value === dataUpdate.difficulty
       );
       setType(defaultType);
       if (dataUpdate.image) {
@@ -37,6 +39,11 @@ const ModalUpdateQuiz = (props) => {
   const handleClose = () => {
     setShow(false);
     //Reset data
+    setName("");
+    setDescription("");
+    setType("");
+    setImage("");
+    setReviewImg("");
     props.resetUpdateData(null);
   };
 
@@ -51,7 +58,20 @@ const ModalUpdateQuiz = (props) => {
     }
   };
 
-  const handleSubmitUpdateQuiz = () => {
+  const validateInput = () => {
+    if (name === "") {
+      toast.error("Name is required");
+      return false;
+    }
+    if (description === "") {
+      toast.error("Description is required");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmitUpdateQuiz = async () => {
+    validateInput();
     console.log(
       "Update data pass to API",
       dataUpdate.id,
@@ -62,8 +82,23 @@ const ModalUpdateQuiz = (props) => {
       "-",
       type.value,
       "-",
-      image,
+      image
     );
+
+    let data = await putQuiz(
+      dataUpdate.id,
+      name,
+      description,
+      type.value,
+      image
+    );
+    if (data && data.EC === 0) {
+      toast.success(data.EM);
+      handleClose();
+      await props.fetchQuiz();
+    } else if (data && data.EC !== 0) {
+      toast.error(data.EM);
+    }
   };
 
   return (

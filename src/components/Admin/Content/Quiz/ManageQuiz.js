@@ -8,6 +8,7 @@ import Accordion from "react-bootstrap/Accordion";
 import { getAllQuizForAdmin } from "../../../../services/apiServices";
 import { MdDriveFolderUpload } from "react-icons/md";
 import ModalUpdateQuiz from "./ModalUpdateQuiz";
+import ModalDeleteQuiz from "./ModalDeleteQuiz";
 
 const options = [
   { value: "EASY", label: "EASY" },
@@ -24,6 +25,7 @@ const ManageQuiz = () => {
   const [reviewImg, setReviewImg] = useState("");
 
   const [showModalUpdateQuiz, setShowModalUpdateQuiz] = useState(false);
+  const [showModalDeleteQuiz, setShowModalDeleteQuiz] = useState(false);
   const [dataUpdate, setDataUpdate] = useState({});
 
   useEffect(() => {
@@ -76,6 +78,11 @@ const ManageQuiz = () => {
     setShowModalUpdateQuiz(true);
     setDataUpdate(quiz);
     console.log("Data update in Modal Update Quiz", quiz);
+  };
+
+  const handleClickBtnDelete = (quiz) => {
+    setShowModalDeleteQuiz(true);
+    setDataUpdate(quiz);
   };
 
   const resetUpdateData = () => {
@@ -165,6 +172,7 @@ const ManageQuiz = () => {
           listQuiz={listQuiz}
           fetchQuiz={fetchQuiz}
           handleClickBtnEdit={handleClickBtnEdit}
+          handleClickBtnDelete={handleClickBtnDelete}
         />
       </div>
       <ModalUpdateQuiz
@@ -173,6 +181,12 @@ const ManageQuiz = () => {
         dataUpdate={dataUpdate}
         fetchQuiz={fetchQuiz}
         resetUpdateData={resetUpdateData}
+      />
+      <ModalDeleteQuiz
+        show={showModalDeleteQuiz}
+        setShow={setShowModalDeleteQuiz}
+        dataDetail={dataUpdate}
+        fetchQuiz={fetchQuiz}
       />
     </div>
   );
