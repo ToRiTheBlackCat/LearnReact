@@ -18,7 +18,7 @@ const SideBarAdmin = ({ collapsed }) => {
           <Link to="/admins/manage-quizzes">Manage Quiz</Link>
         </li>
         <li>
-          <Link to="/admins/questions">Questions</Link>
+          <Link to="/admins/manage-questions">Manage Questions</Link>
         </li>
       </ul>
     </div>
