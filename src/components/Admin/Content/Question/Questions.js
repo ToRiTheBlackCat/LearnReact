@@ -6,7 +6,7 @@ import { LuOctagonMinus } from "react-icons/lu";
 import { TbSquareRoundedMinus } from "react-icons/tb";
 import { PiPlusCircleFill } from "react-icons/pi";
 import { v4 as uuidv4 } from "uuid";
-import _, { iteratee } from "lodash";
+import _, { every, toUpper } from "lodash";
 
 const Questions = (props) => {
   const options = [
@@ -92,6 +92,37 @@ const Questions = (props) => {
     }
   };
 
+  const handleOnChange = (type, quesId, value) => {
+    if (type === "QUESTION") {
+      let questionsClone = _.cloneDeep(questions);
+
+      let index = questionsClone.findIndex((item) => item.id === quesId);
+      if (index > -1) {
+        questionsClone[index].description = value;
+        setQuestions(questionsClone);
+      }
+    }
+  };
+
+  const handleOnChangeFileQuestion = (quesId, event) => {
+    let questionsClone = _.cloneDeep(questions);
+
+    let index = questionsClone.findIndex((item) => item.id === quesId);
+    if (
+      index > -1 &&
+      event.target &&
+      event.target.files &&
+      event.target.files[0]
+    ) {
+      questionsClone[index].imageFile = event.target.files[0];
+      questionsClone[index].imageName = event.target.files[0].name;
+
+      console.log(questionsClone);
+
+      setQuestions(questionsClone);
+    }
+  };
+
   return (
     <div className="questions-container">
       <div className="title">Manage Question</div>
@@ -122,13 +153,33 @@ const Questions = (props) => {
                     className="form-control"
                     placeholder="name@example.com"
                     value={question.description}
+                    onChange={(event) =>
+                      handleOnChange(
+                        "QUESTION",
+                        question.id,
+                        event.target.value
+                      )
+                    }
                   />
                   <label>Question {index + 1} 's description</label>
                 </div>
                 <div className="group-upload">
-                  <label className="label-upload">Upload img</label>
-                  <input type="file" hidden />
-                  <span>No file is uploaded</span>
+                  <label className="label-upload" htmlFor={`${question.id}`}>
+                    Upload img
+                  </label>
+                  <input
+                    id={`${question.id}`}
+                    type="file"
+                    hidden
+                    onChange={(event) =>
+                      handleOnChangeFileQuestion(question.id, event)
+                    }
+                  />
+                  <span>
+                    {question.imageName !== ""
+                      ? question.imageName
+                      : "No file is uploaded"}
+                  </span>
                 </div>
                 <div className="btn-ques">
                   <span onClick={() => handlerAddRemoveQuestion("ADD", "")}>
