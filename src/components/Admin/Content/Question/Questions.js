@@ -7,6 +7,7 @@ import { TbSquareRoundedMinus } from "react-icons/tb";
 import { PiPlusCircleFill } from "react-icons/pi";
 import { v4 as uuidv4 } from "uuid";
 import _, { every, toUpper } from "lodash";
+import Lightbox from "react-awesome-lightbox";
 
 const Questions = (props) => {
   const options = [
@@ -31,6 +32,12 @@ const Questions = (props) => {
       ],
     },
   ]);
+
+  const [isPreviewImage, setIsPreviewImage] = useState(false);
+  const [dataImagePreview, setDataImagePreview] = useState({
+    title: "",
+    url: "",
+  });
 
   const handlerAddRemoveQuestion = (type, id) => {
     if (type === "ADD") {
@@ -136,6 +143,18 @@ const Questions = (props) => {
     console.log(questions);
   };
 
+  const handlePreviewImage = (quesId) => {
+    let questionsClone = _.cloneDeep(questions);
+    let index = questionsClone.findIndex((item) => item.id === quesId);
+    if (index > -1) {
+      setDataImagePreview({
+        url: URL.createObjectURL(questionsClone[index].imageFile),
+        title: questionsClone[index].imageName,
+      });
+      setIsPreviewImage(true);
+    }
+  };
+
   return (
     <div className="questions-container">
       <div className="title">Manage Question</div>
@@ -151,140 +170,155 @@ const Questions = (props) => {
             placeholder="Choose a Quiz"
           />
         </div>
-      </div>
-      <div className="mt-3 mb-2">Add questions:</div>
 
-      {questions &&
-        questions.length > 0 &&
-        questions.map((question, index) => {
-          return (
-            <div key={question.id} className="q-main mb-4">
-              <div className="questions-content">
-                <div className="form-floating description">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="name@example.com"
-                    value={question.description}
-                    onChange={(event) =>
-                      handleOnChange(
-                        "QUESTION",
-                        question.id,
-                        event.target.value
-                      )
-                    }
-                  />
-                  <label>Question {index + 1} 's description</label>
-                </div>
-                <div className="group-upload">
-                  <label className="label-upload" htmlFor={`${question.id}`}>
-                    Upload img
-                  </label>
-                  <input
-                    id={`${question.id}`}
-                    type="file"
-                    hidden
-                    onChange={(event) =>
-                      handleOnChangeFileQuestion(question.id, event)
-                    }
-                  />
-                  <span>
-                    {question.imageName !== ""
-                      ? question.imageName
-                      : "No file is uploaded"}
-                  </span>
-                </div>
-                <div className="btn-ques">
-                  <span onClick={() => handlerAddRemoveQuestion("ADD", "")}>
-                    <GoPlusCircle className="icon-add-ques" />
-                  </span>
-                  {questions.length > 1 && (
-                    <span
-                      onClick={() =>
-                        handlerAddRemoveQuestion("REMOVE", question.id)
+        <div className="mt-3 mb-2">Add questions:</div>
+
+        {questions &&
+          questions.length > 0 &&
+          questions.map((question, index) => {
+            return (
+              <div key={question.id} className="q-main mb-4">
+                <div className="questions-content">
+                  <div className="form-floating description">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="name@example.com"
+                      value={question.description}
+                      onChange={(event) =>
+                        handleOnChange(
+                          "QUESTION",
+                          question.id,
+                          event.target.value
+                        )
                       }
-                    >
-                      <LuOctagonMinus className="icon-remove-ques" />
+                    />
+                    <label>Question {index + 1} 's description</label>
+                  </div>
+                  <div className="group-upload">
+                    <label className="label-upload" htmlFor={`${question.id}`}>
+                      Upload img
+                    </label>
+                    <input
+                      id={`${question.id}`}
+                      type="file"
+                      hidden
+                      onChange={(event) =>
+                        handleOnChangeFileQuestion(question.id, event)
+                      }
+                    />
+                    <span>
+                      {question.imageName !== "" ? (
+                        <span
+                          className="preview-image-name"
+                          onClick={() => handlePreviewImage(question.id)}
+                        >
+                          {question.imageName}{" "}
+                        </span>
+                      ) : (
+                        "No file is uploaded"
+                      )}
                     </span>
-                  )}
-                </div>
-              </div>
-
-              {question.answers &&
-                question.answers.length > 0 &&
-                question.answers.map((answer, index) => {
-                  return (
-                    <div key={answer.id} className="answers-content">
-                      <input
-                        className="form-check-input iscorrect"
-                        type="checkbox"
-                        checked={answer.isCorrect}
-                        onChange={(event) =>
-                          handleAnswerQuestion(
-                            "CHECKBOX",
-                            answer.id,
-                            question.id,
-                            event.target.checked
-                          )
+                  </div>
+                  <div className="btn-ques">
+                    <span onClick={() => handlerAddRemoveQuestion("ADD", "")}>
+                      <GoPlusCircle className="icon-add-ques" />
+                    </span>
+                    {questions.length > 1 && (
+                      <span
+                        onClick={() =>
+                          handlerAddRemoveQuestion("REMOVE", question.id)
                         }
-                      />
-                      <div className="form-floating answer-name">
+                      >
+                        <LuOctagonMinus className="icon-remove-ques" />
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {question.answers &&
+                  question.answers.length > 0 &&
+                  question.answers.map((answer, index) => {
+                    return (
+                      <div key={answer.id} className="answers-content">
                         <input
-                          type="text"
-                          className="form-control"
-                          placeholder="name@example.com"
-                          value={answer.description}
+                          className="form-check-input iscorrect"
+                          type="checkbox"
+                          checked={answer.isCorrect}
                           onChange={(event) =>
                             handleAnswerQuestion(
-                              "INPUT",
+                              "CHECKBOX",
                               answer.id,
                               question.id,
-                              event.target.value
+                              event.target.checked
                             )
                           }
                         />
-                        <label>Answer {index + 1}</label>
-                      </div>
-                      <div className="btn-ans">
-                        <span
-                          onClick={() =>
-                            handlerAddRemoveAnswer("ADD", "", question.id)
-                          }
-                        >
-                          <PiPlusCircleFill className="icon-add-ans" />
-                        </span>
-                        {question.answers.length > 1 && (
-                          <span
-                            onClick={() =>
-                              handlerAddRemoveAnswer(
-                                "REMOVE",
+                        <div className="form-floating answer-name">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="name@example.com"
+                            value={answer.description}
+                            onChange={(event) =>
+                              handleAnswerQuestion(
+                                "INPUT",
                                 answer.id,
-                                question.id
+                                question.id,
+                                event.target.value
                               )
                             }
+                          />
+                          <label>Answer {index + 1}</label>
+                        </div>
+                        <div className="btn-ans">
+                          <span
+                            onClick={() =>
+                              handlerAddRemoveAnswer("ADD", "", question.id)
+                            }
                           >
-                            <TbSquareRoundedMinus className="icon-remove-ans" />
+                            <PiPlusCircleFill className="icon-add-ans" />
                           </span>
-                        )}
+                          {question.answers.length > 1 && (
+                            <span
+                              onClick={() =>
+                                handlerAddRemoveAnswer(
+                                  "REMOVE",
+                                  answer.id,
+                                  question.id
+                                )
+                              }
+                            >
+                              <TbSquareRoundedMinus className="icon-remove-ans" />
+                            </span>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
 
-              <hr />
-            </div>
-          );
-        })}
-      {questions && questions.length > 0 && (
-        <div>
-          <button
-            className="btn btn-warning"
-            onClick={() => handleSubmitQuestionForQuiz()}
-          >
-            Save Questions
-          </button>
-        </div>
-      )}
+                <hr />
+              </div>
+            );
+          })}
+        {questions && questions.length > 0 && (
+          <div>
+            <button
+              className="btn btn-warning"
+              onClick={() => handleSubmitQuestionForQuiz()}
+            >
+              Save Questions
+            </button>
+          </div>
+        )}
+        {isPreviewImage === true && (
+          <Lightbox
+            image={dataImagePreview.url}
+            title={dataImagePreview.title}
+            onClose={() => setIsPreviewImage(false)}
+          ></Lightbox>
+        )}
+      </div>
     </div>
   );
 };

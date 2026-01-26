@@ -35,6 +35,14 @@
           border: 1px solid rgb(39, 39, 39);
         }
       }
+
+      .preview-image-name {
+        color: rgb(88, 88, 88);
+        &:hover {
+          cursor: pointer;
+          color: black;
+        }
+      }
     }
 
     .btn-ques {
