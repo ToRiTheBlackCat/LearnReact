@@ -111,6 +111,10 @@ const postCreateNewAnswerForQuestion = (
   }); //x-www-form-urlencoded
 };
 
+const postAssignQuizToUser = (quizId, userId) => {
+  return axios.post("api/v1/quiz-assign-to-user", { quizId, userId }); //x-www-form-urlencoded
+};
+
 export {
   postCreateUsers,
   getAllUsers,
@@ -128,4 +132,5 @@ export {
   deleteQuiz,
   postCreateNewQuestionForQuiz,
   postCreateNewAnswerForQuestion,
+  postAssignQuizToUser,
 };

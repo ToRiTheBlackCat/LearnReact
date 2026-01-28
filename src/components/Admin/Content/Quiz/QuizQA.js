@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import "./Questions.scss";
+import "./QuizQA.scss";
 import { GoPlusCircle } from "react-icons/go";
 import { LuOctagonMinus } from "react-icons/lu";
 import { TbSquareRoundedMinus } from "react-icons/tb";
@@ -16,7 +16,7 @@ import {
   postCreateNewQuestionForQuiz,
 } from "../../../../services/apiServices";
 
-const Questions = (props) => {
+const QuizQA = (props) => {
   const initQuestions = [
     {
       id: uuidv4(),
@@ -292,8 +292,6 @@ const Questions = (props) => {
 
   return (
     <div className="questions-container">
-      <div className="title">Manage Question</div>
-      <hr />
       <div className="add-new-question">
         <div className="col-6 form-group">
           <label>Select Quiz</label>
@@ -463,4 +461,4 @@ const Questions = (props) => {
     </div>
   );
 };
-export default Questions;
+export default QuizQA;
