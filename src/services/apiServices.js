@@ -115,6 +115,14 @@ const postAssignQuizToUser = (quizId, userId) => {
   return axios.post("api/v1/quiz-assign-to-user", { quizId, userId }); //x-www-form-urlencoded
 };
 
+const logout = (email, refresh_token) => {
+  return axios.post("api/v1/logout", { email, refresh_token });
+};
+
+const getQuizWithQuesAns = (quizId) => {
+  return axios.get(`api/v1/quiz-with-qa/${quizId}`);
+};
+
 export {
   postCreateUsers,
   getAllUsers,
@@ -133,4 +141,6 @@ export {
   postCreateNewQuestionForQuiz,
   postCreateNewAnswerForQuestion,
   postAssignQuizToUser,
+  logout,
+  getQuizWithQuesAns,
 };

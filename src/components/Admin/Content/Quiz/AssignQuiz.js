@@ -25,7 +25,7 @@ const AssignQuiz = (props) => {
       let newQuiz = res.DT.map((item) => {
         return {
           value: item.id,
-          label: `${item.id} - ${item.description}`,
+          label: `${item.id} - ${item.name}`,
         };
       });
       setListQuiz(newQuiz);
@@ -64,6 +64,8 @@ const AssignQuiz = (props) => {
       //Reset data
       setSelectedQuiz(null);
       setSelectedUser(null);
+    } else {
+      toast.error(res.EM);
     }
   };
 

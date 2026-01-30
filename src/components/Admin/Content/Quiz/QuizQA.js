@@ -14,6 +14,7 @@ import {
   getAllQuizForAdmin,
   postCreateNewAnswerForQuestion,
   postCreateNewQuestionForQuiz,
+  getQuizWithQuesAns,
 } from "../../../../services/apiServices";
 
 const QuizQA = (props) => {
@@ -47,6 +48,12 @@ const QuizQA = (props) => {
     fetchQuiz();
   }, []);
 
+  useEffect(() => {
+    if (selectedQuiz && selectedQuiz.value) {
+      fetchQuizDetail();
+    }
+  }, [selectedQuiz]);
+
   const fetchQuiz = async () => {
     let res = await getAllQuizForAdmin();
     if (res && res.EC === 0) {
@@ -57,6 +64,48 @@ const QuizQA = (props) => {
         };
       });
       setListQuiz(newQuiz);
+    }
+  };
+
+  //Return a promise that resolves with a File instance
+  function urltoFile(url, filename, mimeType) {
+    return fetch(url)
+      .then(function (res) {
+        return res.arrayBuffer();
+      })
+      .then(function (buf) {
+        return new File([buf], filename, { type: mimeType });
+      });
+  }
+
+  //Usage example
+  // urltoFile(
+  //   "data:text/plain;base64,aGVsbG8gd29ybGQ=",
+  //   "hello.txt",
+  //   "text/plain"
+  // ).then(function (file) {
+  //   console.log(file);
+  // });
+
+  const fetchQuizDetail = async () => {
+    let res = await getQuizWithQuesAns(selectedQuiz.value);
+    if (res && res.EC === 0) {
+      //Convert base664 to file object
+      let newQA = [];
+      for (let i = 0; i < res.DT.qa.length; i++) {
+        let q = res.DT.qa[i];
+        if (q.imageFile) {
+          q.imageName = `Question-${q.id}.png`;
+          q.imageFile = await urltoFile(
+            `data:image/png;base64,${q.imageFile}`,
+            `Question-${q.id}`,
+            "image/png"
+          );
+        }
+        newQA.push(q);
+      }
+      setQuestions(newQA);
+      console.log("Selected quiz: ", selectedQuiz.value);
     }
   };
 

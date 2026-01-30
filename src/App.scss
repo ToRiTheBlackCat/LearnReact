@@ -1,3 +1,7 @@
+html {
+  overflow: hidden;
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -9,7 +13,7 @@ body {
 }
 .app-container {
   background-color: rgb(250, 235, 208);
-  height: 100vh;
+  height: 100%;
 
   .header-container {
     .btn-login {
@@ -71,6 +75,10 @@ body {
         }
       }
     }
+  }
+
+  .app-content {
+    height: calc(100vh - 60px);
   }
 }
 video {
