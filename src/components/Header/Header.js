@@ -5,6 +5,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { doLogout } from "../../redux/action/userAction";
+import { logout } from "../../services/apiServices";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const Header = () => {
 
   const handleLogOut = () => {
     dispatch(doLogout());
+    // logout(account.email, account.refresh_token);
     navigate("/login");
   };
 

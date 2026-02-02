@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import "./Questions.scss";
+import "./QuizQA.scss";
 import { GoPlusCircle } from "react-icons/go";
 import { LuOctagonMinus } from "react-icons/lu";
 import { TbSquareRoundedMinus } from "react-icons/tb";
@@ -14,9 +14,11 @@ import {
   getAllQuizForAdmin,
   postCreateNewAnswerForQuestion,
   postCreateNewQuestionForQuiz,
+  getQuizWithQuesAns,
+  postUpsertQA,
 } from "../../../../services/apiServices";
 
-const Questions = (props) => {
+const QuizQA = (props) => {
   const initQuestions = [
     {
       id: uuidv4(),
@@ -47,6 +49,12 @@ const Questions = (props) => {
     fetchQuiz();
   }, []);
 
+  useEffect(() => {
+    if (selectedQuiz && selectedQuiz.value) {
+      fetchQuizDetail();
+    }
+  }, [selectedQuiz]);
+
   const fetchQuiz = async () => {
     let res = await getAllQuizForAdmin();
     if (res && res.EC === 0) {
@@ -57,6 +65,48 @@ const Questions = (props) => {
         };
       });
       setListQuiz(newQuiz);
+    }
+  };
+
+  //Return a promise that resolves with a File instance
+  function urltoFile(url, filename, mimeType) {
+    return fetch(url)
+      .then(function (res) {
+        return res.arrayBuffer();
+      })
+      .then(function (buf) {
+        return new File([buf], filename, { type: mimeType });
+      });
+  }
+
+  //Usage example
+  // urltoFile(
+  //   "data:text/plain;base64,aGVsbG8gd29ybGQ=",
+  //   "hello.txt",
+  //   "text/plain"
+  // ).then(function (file) {
+  //   console.log(file);
+  // });
+
+  const fetchQuizDetail = async () => {
+    let res = await getQuizWithQuesAns(selectedQuiz.value);
+    if (res && res.EC === 0) {
+      //Convert base664 to file object
+      let newQA = [];
+      for (let i = 0; i < res.DT.qa.length; i++) {
+        let q = res.DT.qa[i];
+        if (q.imageFile) {
+          q.imageName = `Question-${q.id}.png`;
+          q.imageFile = await urltoFile(
+            `data:image/png;base64,${q.imageFile}`,
+            `Question-${q.id}`,
+            "image/png"
+          );
+        }
+        newQA.push(q);
+      }
+      setQuestions(newQA);
+      console.log("Selected quiz: ", selectedQuiz.value);
     }
   };
 
@@ -256,27 +306,50 @@ const Questions = (props) => {
     // );
 
     //Cách 2 dùng For object - Đảm bảo chạy theo trình tự
-    for (const ques of questions) {
-      const q = await postCreateNewQuestionForQuiz(
-        +selectedQuiz.value,
-        ques.description,
-        ques.imageFile
-      );
-      //Answer
-      for (const ans of ques.answers) {
-        await postCreateNewAnswerForQuestion(
-          ans.description,
-          ans.isCorrect,
-          q.DT.id
+    // for (const ques of questions) {
+    //   const q = await postCreateNewQuestionForQuiz(
+    //     +selectedQuiz.value,
+    //     ques.description,
+    //     ques.imageFile
+    //   );
+    //   //Answer
+    //   for (const ans of ques.answers) {
+    //     await postCreateNewAnswerForQuestion(
+    //       ans.description,
+    //       ans.isCorrect,
+    //       q.DT.id
+    //     );
+    //   }
+    // }
+
+    let questionsClone = _.cloneDeep(questions);
+    for (let i = 0; i < questionsClone.length; i++) {
+      if (questionsClone[i].imageFile) {
+        questionsClone[i].imageFile = await toBase64(
+          questionsClone[i].imageFile
         );
       }
     }
+    let res = await postUpsertQA({
+      quizId: selectedQuiz.value,
+      questions: questionsClone,
+    });
 
-    if (errCount === 0) {
-      toast.success("Create success");
-      setQuestions(initQuestions);
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
+      fetchQuizDetail();
     }
+
+    console.log("CHECK RES", res);
   };
+
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
 
   const handlePreviewImage = (quesId) => {
     let questionsClone = _.cloneDeep(questions);
@@ -292,8 +365,6 @@ const Questions = (props) => {
 
   return (
     <div className="questions-container">
-      <div className="title">Manage Question</div>
-      <hr />
       <div className="add-new-question">
         <div className="col-6 form-group">
           <label>Select Quiz</label>
@@ -463,4 +534,4 @@ const Questions = (props) => {
     </div>
   );
 };
-export default Questions;
+export default QuizQA;

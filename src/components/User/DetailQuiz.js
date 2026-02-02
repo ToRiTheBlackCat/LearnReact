@@ -5,6 +5,7 @@ import _ from "lodash";
 import "./DetailQuiz.scss";
 import Question from "./Question";
 import ModalResult from "./ModalResult";
+import RightContent from "./Content/RightContent";
 
 const DetailQuiz = () => {
   const params = useParams();
@@ -83,7 +84,7 @@ const DetailQuiz = () => {
 
     //Find question that has answers updated
     let question = dataQuizClone.find(
-      (item) => +item.questionId === +questionId,
+      (item) => +item.questionId === +questionId
     );
 
     //Loop to find ans
@@ -103,7 +104,7 @@ const DetailQuiz = () => {
 
     //Find updated index
     let index = dataQuizClone.findIndex(
-      (item) => +item.questionId === +questionId,
+      (item) => +item.questionId === +questionId
     );
     //If found > -1
     if (index > -1) {
@@ -189,7 +190,13 @@ const DetailQuiz = () => {
         <div></div>
       </div>
 
-      <div className="right-content">Count down</div>
+      <div className="right-content">
+        <RightContent
+          dataQuiz={dataQuiz}
+          handleFinishQuiz={handleFinishQuiz}
+          setIndex={setIndex}
+        />
+      </div>
       <ModalResult
         show={isShowModalResult}
         setShow={setIsShowModalResult}

@@ -1,8 +1,9 @@
 .list-quiz-container {
   display: flex;
   gap: 100px;
+  flex-wrap: wrap;
 
   .card {
-    width: 50rem;
+    width: 22rem;
   }
 }
