@@ -88,6 +88,13 @@
         background-color: rgb(50, 50, 50);
         color: white;
       }
+      &.selected {
+        background-color: #595959;
+        color: white;
+      }
+      &.clicked {
+        color: red;
+      }
     }
   }
 }
