@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { doLogout } from "../../redux/action/userAction";
 import { logout } from "../../services/apiServices";
 import { Toast } from "bootstrap";
+import Language from "./Language";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -72,15 +73,15 @@ const Header = () => {
                 </button>
               </>
             ) : (
-              <>
-                <NavDropdown title="Setting" id="basic-nav-dropdown">
-                  <NavDropdown.Item onClick={() => handleLogOut()}>
-                    Log out
-                  </NavDropdown.Item>
-                  <NavDropdown.Item>Profile</NavDropdown.Item>
-                </NavDropdown>
-              </>
+              <NavDropdown title="Setting" id="basic-nav-dropdown">
+                <NavDropdown.Item onClick={() => handleLogOut()}>
+                  Log out
+                </NavDropdown.Item>
+                <NavDropdown.Item>Profile</NavDropdown.Item>
+              </NavDropdown>
             )}
+
+            <Language />
           </Nav>
         </Navbar.Collapse>
       </Container>

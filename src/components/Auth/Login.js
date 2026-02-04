@@ -8,6 +8,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
 import { ImSpinner } from "react-icons/im";
+import Language from "../Header/Language";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -87,6 +88,7 @@ const Login = (props) => {
       <div className="header">
         <span>Don't have an account yet?</span>
         <button onClick={() => handleSignup()}>Sign Up</button>
+        <Language />
       </div>
       <div className="title col-4 mx-auto">MINH TRI Website</div>
       <div className="welcome col-4 mx-auto">Hello, who's this?</div>

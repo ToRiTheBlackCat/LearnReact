@@ -11,6 +11,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.languages {
+  .dropdown-toggle::after {
+    display: none !important;
+  }
+}
+
 .app-container {
   background-color: rgb(250, 235, 208);
   height: 100%;

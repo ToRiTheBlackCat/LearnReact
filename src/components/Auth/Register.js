@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { postRegister } from "../../services/apiServices";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Language from "../Header/Language";
 
 const Register = (props) => {
   const [email, setEmail] = useState("");
@@ -72,6 +73,7 @@ const Register = (props) => {
       <div className="header">
         <span>Already had an account ?</span>
         <button onClick={() => handleGoBackLogin()}>Login</button>
+        <Language />
       </div>
       <div className="title col-4 mx-auto">MINH TRI Website</div>
       <div className="welcome col-4 mx-auto">Register your new account</div>
