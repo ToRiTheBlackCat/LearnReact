@@ -6,6 +6,7 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { doLogout } from "../../redux/action/userAction";
 import { logout } from "../../services/apiServices";
+import { Toast } from "bootstrap";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -24,10 +25,14 @@ const Header = () => {
     navigate("/register");
   };
 
-  const handleLogOut = () => {
-    dispatch(doLogout());
-    // logout(account.email, account.refresh_token);
-    navigate("/login");
+  const handleLogOut = async () => {
+    let res = await logout(account.email, account.refresh_token);
+    if (res && res.EC === 0) {
+      dispatch(doLogout());
+      navigate("/login");
+    } else {
+      Toast.error(res.EM);
+    }
   };
 
   return (

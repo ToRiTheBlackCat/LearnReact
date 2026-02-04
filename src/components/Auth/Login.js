@@ -75,6 +75,13 @@ const Login = (props) => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    console.log(event.key);
+    if (event.key === "Enter" || event.keyCode === 13) {
+      handleLogin();
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="header">
@@ -100,6 +107,7 @@ const Login = (props) => {
             className="form-control"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
+            onKeyDown={(event) => handleKeyDown(event)}
           />
           <span
             className="icon-eye"
@@ -113,7 +121,7 @@ const Login = (props) => {
           <button
             className="btn-submit"
             onClick={() => handleLogin()}
-            disabled={isLoading} // <--- This activates your CSS
+            disabled={isLoading}
           >
             {/* Only show spinner if loading is true */}
             {isLoading === true && <ImSpinner className="loaderIcon" />}
