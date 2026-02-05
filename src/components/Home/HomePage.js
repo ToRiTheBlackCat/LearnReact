@@ -1,10 +1,13 @@
 import { useSelector } from "react-redux";
 import videoHomepage from "../../assets/video-homepage.mp4";
 import { useNavigate } from "react-router-dom";
+import { useTranslation, Trans } from "react-i18next";
 
 const HomePage = (props) => {
   const isAutheticated = useSelector((state) => state.user.isAuthenticated);
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   return (
     <div className="homepage-container">
       {/* Theo trải nghiệm người dùng nên muốn video tự chạy
@@ -13,25 +16,22 @@ const HomePage = (props) => {
         <source src={videoHomepage} type="video/mp4" />
       </video>
       <div className="homepage-content">
-        <div className="main-title"> There's a better way to ask</div>
-        <div className="content-title">
-          You don't want to make a boring form. And your audience won't answer
-          one. Create a typeform instead-and make everyon happy
-        </div>
+        <div className="main-title">{t("homePage.mainTitle")}</div>
+        <div className="content-title">{t("homePage.contentTitle")}</div>
         <div>
           {isAutheticated ? (
             <button
               className="getStarted-button"
               onClick={() => navigate("/users")}
             >
-              Doing Quiz now
+              {t("homePage.getStartedButton")}
             </button>
           ) : (
             <button
               className="getStarted-button"
               onClick={() => navigate("/login")}
             >
-              Get's started. It's free
+              {t("homePage.getStartedButton")}
             </button>
           )}
         </div>
