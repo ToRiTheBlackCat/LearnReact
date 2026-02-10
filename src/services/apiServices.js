@@ -131,6 +131,10 @@ const getOverview = () => {
   return axios.get("api/v1/overview");
 };
 
+const postRefreshToken = (email, refresh_token) => {
+  return axios.post("api/v1/refresh-token", { email, refresh_token }); //x-www-form-urlencoded
+};
+
 export {
   postCreateUsers,
   getAllUsers,
@@ -153,4 +157,5 @@ export {
   getQuizWithQuesAns,
   postUpsertQA,
   getOverview,
+  postRefreshToken,
 };
