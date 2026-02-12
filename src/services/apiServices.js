@@ -135,6 +135,24 @@ const postRefreshToken = (email, refresh_token) => {
   return axios.post("api/v1/refresh-token", { email, refresh_token }); //x-www-form-urlencoded
 };
 
+const postUpdateProfile = (username, imageFile) => {
+  const data = new FormData();
+  data.append("username", username);
+  data.append("userImage", imageFile);
+  return axios.post("api/v1/profile", data); //form-data
+};
+
+const postUpdatePassword = (current_password, new_password) => {
+  return axios.post("api/v1/change-password", {
+    current_password,
+    new_password,
+  });
+};
+
+const getQuizHistory = () => {
+  return axios.get("api/v1/history");
+};
+
 export {
   postCreateUsers,
   getAllUsers,
@@ -158,4 +176,7 @@ export {
   postUpsertQA,
   getOverview,
   postRefreshToken,
+  postUpdateProfile,
+  postUpdatePassword,
+  getQuizHistory,
 };

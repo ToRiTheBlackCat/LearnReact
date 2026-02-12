@@ -1,0 +1,52 @@
+.user-profile-content {
+  .lable {
+    font-size: 18px;
+    padding-top: 10px;
+  }
+  .label-upload {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: fit-content;
+    padding: 3px 10px;
+    background: #eeeeee;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(156, 148, 150, 0.8);
+    }
+  }
+
+  .img-preview {
+    border: 1px dashed #ccc;
+    height: 250px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ccc;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+}
+
+.user-password-content {
+  .lable {
+    font-size: 18px;
+  }
+
+  .form-group {
+    position: relative;
+
+    .icon-eye {
+      position: absolute;
+      right: 20px;
+      top: 40px;
+      cursor: pointer;
+      z-index: 10;
+    }
+  }
+}
