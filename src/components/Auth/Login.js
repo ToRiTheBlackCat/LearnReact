@@ -8,6 +8,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
 import { ImSpinner } from "react-icons/im";
+import Language from "../Header/Language";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -75,11 +76,19 @@ const Login = (props) => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    console.log(event.key);
+    if (event.key === "Enter" || event.keyCode === 13) {
+      handleLogin();
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="header">
         <span>Don't have an account yet?</span>
         <button onClick={() => handleSignup()}>Sign Up</button>
+        <Language />
       </div>
       <div className="title col-4 mx-auto">MINH TRI Website</div>
       <div className="welcome col-4 mx-auto">Hello, who's this?</div>
@@ -100,6 +109,7 @@ const Login = (props) => {
             className="form-control"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
+            onKeyDown={(event) => handleKeyDown(event)}
           />
           <span
             className="icon-eye"
@@ -113,7 +123,7 @@ const Login = (props) => {
           <button
             className="btn-submit"
             onClick={() => handleLogin()}
-            disabled={isLoading} // <--- This activates your CSS
+            disabled={isLoading}
           >
             {/* Only show spinner if loading is true */}
             {isLoading === true && <ImSpinner className="loaderIcon" />}

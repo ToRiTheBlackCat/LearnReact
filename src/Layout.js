@@ -14,7 +14,7 @@ import ListQuiz from "./components/User/ListQuiz";
 import DetailQuiz from "./components/User/DetailQuiz";
 import ManageQuiz from "./components/Admin/Content/Quiz/ManageQuiz";
 import Questions from "./components/Admin/Content/Question/Questions";
-import Test1 from "./routes/Test1";
+import React, { Suspense } from "react";
 import PrivateRoute from "./routes/PrivateRoute";
 
 const NotFound = () => {
@@ -25,7 +25,7 @@ const NotFound = () => {
 
 const Layout = (props) => {
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         {/* Tránh hàm event.preventDefault của tag a cổ điển - ko gây load trang */}
         <Route path="/" element={<App />}>
@@ -78,7 +78,7 @@ const Layout = (props) => {
         theme="colored"
         transition={Zoom}
       />
-    </>
+    </Suspense>
   );
 };
 export default Layout;

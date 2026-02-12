@@ -1,4 +1,8 @@
-import { FETCH_USER_LOGIN_SUCCESS, USER_LOGOUT } from "../action/userAction";
+import {
+  FETCH_USER_LOGIN_SUCCESS,
+  USER_LOGOUT,
+  USER_UPDATE,
+} from "../action/userAction";
 
 const INITIAL_STATE = {
   account: {
@@ -7,6 +11,7 @@ const INITIAL_STATE = {
     username: "",
     image: "",
     role: "",
+    email: "",
   },
   isAuthenticated: false,
 };
@@ -22,6 +27,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
           username: action.payload.DT.username,
           image: action.payload.DT.image,
           role: action.payload.DT.role,
+          email: action.payload.DT.email,
         },
         isAuthenticated: true,
       };
@@ -35,9 +41,20 @@ const userReducer = (state = INITIAL_STATE, action) => {
           username: "",
           image: "",
           role: "",
+          email: "",
         },
         isAuthenticated: false,
       };
+    case USER_UPDATE:
+      return {
+        ...state,
+        account: {
+          ...state.account,
+          username: action.payload.DT.username,
+          image: action.payload.DT.image,
+        },
+      };
+
     default:
       return state;
   }

@@ -55,6 +55,8 @@ const DetailQuiz = () => {
 
             //Push các câu trả lời vào mảng answers
             answers.push(item.answers);
+
+            answers = _.orderBy(answers, ["id"], ["asc"]);
           });
           return {
             questionId: key,
