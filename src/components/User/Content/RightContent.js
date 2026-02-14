@@ -4,7 +4,7 @@ import { useRef } from "react";
 const RightContent = (props) => {
   const refDiv = useRef([]);
 
-  const { dataQuiz } = props;
+  const { dataQuiz, timeup } = props;
 
   const onTimeUp = () => {
     props.handleFinishQuiz();
@@ -46,7 +46,7 @@ const RightContent = (props) => {
   return (
     <>
       <div className="main-timer">
-        <CountDown onTimeUp={onTimeUp} />
+        <CountDown onTimeUp={onTimeUp} timeup={timeup} />
       </div>
       <div className="main-question">
         {dataQuiz &&

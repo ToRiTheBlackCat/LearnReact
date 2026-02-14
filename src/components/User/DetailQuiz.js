@@ -16,6 +16,9 @@ const DetailQuiz = () => {
   const [isShowModalResult, setIsShowModalResult] = useState(false);
   const [dataModalResult, setdataModalResult] = useState({});
 
+  const [isShowAnswer, setIsShowAnswer] = useState(false);
+  const [timeup, setTimeup] = useState(300);
+
   const { id } = params;
 
   useEffect(() => {
@@ -25,6 +28,13 @@ const DetailQuiz = () => {
 
     fetchQuizDetail();
   }, [id, location]);
+
+  useEffect(() => {
+    if (isShowAnswer) {
+      //Freeze time and disable button finish
+      setTimeup(0);
+    }
+  }, [isShowAnswer]);
 
   const fetchQuizDetail = async () => {
     //call api get detail quiz
@@ -185,6 +195,7 @@ const DetailQuiz = () => {
           <button
             className="btn btn-warning"
             onClick={() => handleFinishQuiz()}
+            disabled={isShowAnswer}
           >
             Finish
           </button>
@@ -197,12 +208,14 @@ const DetailQuiz = () => {
           dataQuiz={dataQuiz}
           handleFinishQuiz={handleFinishQuiz}
           setIndex={setIndex}
+          timeup={timeup}
         />
       </div>
       <ModalResult
         show={isShowModalResult}
         setShow={setIsShowModalResult}
         dataModalResult={dataModalResult}
+        setIsShowAnswer={setIsShowAnswer}
       />
     </div>
   );

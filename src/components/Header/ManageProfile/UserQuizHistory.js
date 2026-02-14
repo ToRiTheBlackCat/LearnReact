@@ -33,7 +33,7 @@ const UserQuizHistory = () => {
 
   return (
     <div className="user-quiz-container">
-      <PerfectScrollbar style={{ maxHeight: "600px", overflowY: "auto" }}>
+      <PerfectScrollbar style={{ maxHeight: "500px", overflowY: "auto" }}>
         <table className="table table-striped table-hover">
           <thead>
             <tr>

@@ -73,6 +73,7 @@ const Profile = (props) => {
             </li>
           </ul>
           <div className="tab-content" id="myTabContent">
+            {/* Profile */}
             <div
               className="tab-pane fade show active"
               id="profile"
@@ -81,6 +82,7 @@ const Profile = (props) => {
             >
               <UserProfile />
             </div>
+            {/* Password */}
             <div
               className="tab-pane fade"
               id="password"
@@ -89,6 +91,7 @@ const Profile = (props) => {
             >
               <UserPassword />
             </div>
+            {/* History */}
             <div
               className="tab-pane fade"
               id="history"

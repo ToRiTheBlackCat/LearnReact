@@ -21,7 +21,7 @@ const UserProfile = () => {
         setReviewImg(`data:image/jpeg;base64,${account.image}`);
       }
     }
-  }, []);
+  }, [account]);
 
   const handleUploadImage = (event) => {
     const file = event.target.files[0];
@@ -74,6 +74,15 @@ const UserProfile = () => {
       <div className="user-profile-content">
         <form className="row g-3">
           <div className="col-md-6">
+            <label className="form-label lable">Email</label>
+            <input
+              type="text"
+              className="form-control"
+              value={account.email}
+              disabled
+            />
+          </div>
+          <div className="col-md-6">
             <label className="form-label lable">Username</label>
             <input
               type="text"
@@ -102,6 +111,7 @@ const UserProfile = () => {
             )}
           </div>
         </form>
+        {/* Button */}
         <div className="col-md-12 d-flex justify-content-end">
           <button
             className="btn btn-primary"
