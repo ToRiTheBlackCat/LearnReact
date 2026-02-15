@@ -3,5 +3,47 @@
         "mainTitle": "There's a better way to ask ",
         "contentTitle": "You don't want to make a boring form. And your audience won't answer one. Create a typeform instead-and make everyon happy ",
         "getStartedButton": "Get's started. It's free"
+    },
+    "userPage": {
+        "startButton": "Start now"
+    },
+    "adminPage": {
+        "sideMenu": {
+            "dashboard": "Dashboard",
+            "manageUser": "Manage User",
+            "manageQuiz": "Manage Quiz",
+            "manageQuestions": "Manage Questions"
+        },
+        "content": {
+            "dashboardTitle": "Analytics Dashboard",
+            "totalUsers": "Total Users",
+            "totalQuizzes": "Total Quizzes",
+            "totalQuestions": "Total Questions",
+            "totalAnswers": "Total Answers",
+            "manageUser": {
+                "title": "Manage User",
+                "addNew": "Add new user"
+            },
+            "manageQuiz": {
+                "title": "Manage Quiz",
+                "addNew": "Add new quiz",
+                "name": "Name",
+                "description": "Description",
+                "quiztype": "Quiz Type",
+                "button": "Create",
+                "updateQAQuiz": {
+                    "title": "Update Q/A quiz",
+                    "selectQuiz": "Select quiz",
+                    "addQuestion": "Add question",
+                    "saveButton": "Save Questions"
+                },
+                "assignQuizToUser": {
+                    "title": "Assign quiz to user",
+                    "selectQuiz": "Select quiz",
+                    "selectUser": "Select user",
+                    "button": "Assign"
+                }
+            }
+        }
     }
 }

@@ -9,6 +9,7 @@ import { v4 as uuidv4, validate } from "uuid";
 import _, { every, toUpper } from "lodash";
 import Lightbox from "react-awesome-lightbox";
 import { ToastContainer, toast, Zoom } from "react-toastify";
+import { useTranslation, Trans } from "react-i18next";
 
 import {
   getAllQuizForAdmin,
@@ -44,6 +45,7 @@ const QuizQA = (props) => {
 
   const [listQuiz, setListQuiz] = useState([]);
   const [selectedQuiz, setSelectedQuiz] = useState({});
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchQuiz();
@@ -367,7 +369,9 @@ const QuizQA = (props) => {
     <div className="questions-container">
       <div className="add-new-question">
         <div className="col-6 form-group">
-          <label>Select Quiz</label>
+          <label>
+            {t("adminPage.content.manageQuiz.updateQAQuiz.selectQuiz")}
+          </label>
           <Select
             value={selectedQuiz}
             defaultValue={selectedQuiz}
@@ -383,7 +387,9 @@ const QuizQA = (props) => {
           />
         </div>
 
-        <div className="mt-3 mb-2">Add questions:</div>
+        <div className="mt-3 mb-2">
+          {t("adminPage.content.manageQuiz.updateQAQuiz.addQuestion")}:
+        </div>
 
         {questions &&
           questions.length > 0 &&
@@ -519,7 +525,7 @@ const QuizQA = (props) => {
               className="btn btn-warning"
               onClick={() => handleSubmitQuestionForQuiz()}
             >
-              Save Questions
+              {t("adminPage.content.manageQuiz.updateQAQuiz.saveButton")}
             </button>
           </div>
         )}

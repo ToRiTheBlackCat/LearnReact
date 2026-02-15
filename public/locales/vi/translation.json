@@ -3,5 +3,47 @@
         "mainTitle": "Có rất nhiều cách tốt hơn để hỏi ",
         "contentTitle": "Bạn không muốn tạo một biểu mẫu nhàm chán. Và khán giả của bạn sẽ không trả lời một biểu mẫu như vậy.Thay vào đó, hãy tạo một typeform - và khiến mọi người hài lòng.",
         "getStartedButton": "Bắt đầu nào. Miễn phí đấy"
+    },
+    "userPage": {
+        "startButton": "Bắt đầu ngay"
+    },
+    "adminPage": {
+        "sideMenu": {
+            "dashboard": "Bảng phân tích",
+            "manageUser": "Quản lý người dùng",
+            "manageQuiz": "Quản lý quiz",
+            "manageQuestions": "Quản lý câu hỏi"
+        },
+        "content": {
+            "dashboardTitle": "Bảng phân tích dữ liệu",
+            "totalUsers": "Tổng số người dùng",
+            "totalQuizzes": "Tổng số quiz",
+            "totalQuestions": "Tổng số câu hỏi",
+            "totalAnswers": "Tổng số câu trả lời",
+            "manageUser": {
+                "title": "Quản lý người dùng",
+                "addNew": "Thêm người dùng mới"
+            },
+            "manageQuiz": {
+                "title": "Quản lý quiz",
+                "addNew": "Thêm quiz mới",
+                "name": "Tên quiz",
+                "description": "Mô tả",
+                "quiztype": "Loại quiz",
+                "button": "Tạo",
+                "updateQAQuiz": {
+                    "title": "Cập nhật Question/Answer quiz",
+                    "selectQuiz": "Chọn quiz",
+                    "addQuestion": "Thêm câu hỏi",
+                    "saveButton": "Lưu câu hỏi"
+                },
+                "assignQuizToUser": {
+                    "title": "Gán quiz cho người dùng",
+                    "selectQuiz": "Chọn quiz",
+                    "selectUser": "Chọn người dùng",
+                    "button": "Gán"
+                }
+            }
+        }
     }
 }

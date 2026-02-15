@@ -35,6 +35,43 @@
         .a-child {
           text-align: left;
           padding-left: 50px;
+          margin-bottom: 10px; // Cách dòng cho thoáng
+
+          .form-check {
+            display: flex;
+            align-items: center;
+            gap: 10px; // Khoảng cách giữa checkbox, chữ và icon
+
+            .form-check-label {
+              cursor: pointer;
+
+              // Style khi ĐÚNG
+              &.correct {
+                color: #198754; // Màu xanh lá bootstrap
+                font-weight: bold;
+              }
+
+              // Style khi SAI
+              &.wrong {
+                color: #dc3545; // Màu đỏ bootstrap
+                font-weight: bold;
+              }
+            }
+
+            // Style cho icon text (V) và (X)
+            .icon-result {
+              font-weight: bold;
+              font-size: 18px;
+
+              &.correct {
+                color: #198754;
+              }
+
+              &.wrong {
+                color: #dc3545;
+              }
+            }
+          }
         }
       }
     }

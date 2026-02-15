@@ -11,6 +11,7 @@ import ModalUpdateQuiz from "./ModalUpdateQuiz";
 import ModalDeleteQuiz from "./ModalDeleteQuiz";
 import QuizQA from "./QuizQA";
 import AssignQuiz from "./AssignQuiz";
+import { useTranslation, Trans } from "react-i18next";
 
 const options = [
   { value: "EASY", label: "EASY" },
@@ -29,6 +30,7 @@ const ManageQuiz = () => {
   const [showModalUpdateQuiz, setShowModalUpdateQuiz] = useState(false);
   const [showModalDeleteQuiz, setShowModalDeleteQuiz] = useState(false);
   const [dataUpdate, setDataUpdate] = useState({});
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchQuiz();
@@ -96,11 +98,15 @@ const ManageQuiz = () => {
       <Accordion defaultActiveKey="0">
         {/* Nếu là 0 thì sẽ tự động mở khi load page */}
         <Accordion.Item eventKey="1">
-          <Accordion.Header>Manage Quizzes</Accordion.Header>
+          <Accordion.Header>
+            {t("adminPage.content.manageQuiz.title")}
+          </Accordion.Header>
           <Accordion.Body>
             <div className="add-new-quiz">
               <fieldset className="border rounded-3 p-3">
-                <legend className="float-none w-auto px-3">Add new Quiz</legend>
+                <legend className="float-none w-auto px-3">
+                  {t("adminPage.content.manageQuiz.addNew")}
+                </legend>
                 <div className="form-floating mb-3">
                   <input
                     type="text"
@@ -109,7 +115,9 @@ const ManageQuiz = () => {
                     value={name}
                     onChange={(event) => setName(event.target.value)}
                   />
-                  <label className="floatingInput">Name</label>
+                  <label className="floatingInput">
+                    {t("adminPage.content.manageQuiz.name")}
+                  </label>
                 </div>
                 <div className="form-floating">
                   <input
@@ -119,7 +127,9 @@ const ManageQuiz = () => {
                     value={description}
                     onChange={(event) => setDescription(event.target.value)}
                   />
-                  <label className="floatingPassword">Description</label>
+                  <label className="floatingPassword">
+                    {t("adminPage.content.manageQuiz.description")}
+                  </label>
                 </div>
                 <div className="my-3">
                   <Select
@@ -127,7 +137,7 @@ const ManageQuiz = () => {
                     defaultValue={type}
                     onChange={setType}
                     options={options}
-                    placeholder="Quiz type"
+                    placeholder={t("adminPage.content.manageQuiz.quiztype")}
                   />
                 </div>
 
@@ -159,7 +169,7 @@ const ManageQuiz = () => {
                     className="btn btn-warning"
                     onClick={() => handleSubmitQuiz()}
                   >
-                    Save
+                    {t("adminPage.content.manageQuiz.button")}
                   </button>
                 </div>
               </fieldset>
@@ -176,13 +186,17 @@ const ManageQuiz = () => {
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="2">
-          <Accordion.Header>Update Q/A Quizzes</Accordion.Header>
+          <Accordion.Header>
+            {t("adminPage.content.manageQuiz.updateQAQuiz.title")}
+          </Accordion.Header>
           <Accordion.Body>
             <QuizQA />
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="3">
-          <Accordion.Header>Assign to Users</Accordion.Header>
+          <Accordion.Header>
+            {t("adminPage.content.manageQuiz.assignQuizToUser.title")}
+          </Accordion.Header>
           <Accordion.Body>
             <AssignQuiz />
           </Accordion.Body>

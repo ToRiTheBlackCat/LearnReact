@@ -6,6 +6,7 @@ import {
   postAssignQuizToUser,
 } from "../../../../services/apiServices";
 import { toast } from "react-toastify";
+import { useTranslation, Trans } from "react-i18next";
 
 const AssignQuiz = (props) => {
   const [listQuiz, setListQuiz] = useState([]);
@@ -13,6 +14,7 @@ const AssignQuiz = (props) => {
 
   const [listUser, setListUser] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchQuiz();
@@ -72,7 +74,9 @@ const AssignQuiz = (props) => {
   return (
     <div className="assign-quiz-container row">
       <div className="col-6 form-group">
-        <label>Select Quiz</label>
+        <label>
+          {t("adminPage.content.manageQuiz.assignQuizToUser.selectQuiz")}
+        </label>
         <Select
           value={selectedQuiz}
           defaultValue={selectedQuiz}
@@ -88,7 +92,9 @@ const AssignQuiz = (props) => {
         />
       </div>
       <div className="col-6 form-group">
-        <label>Select User</label>
+        <label>
+          {t("adminPage.content.manageQuiz.assignQuizToUser.selectUser")}
+        </label>
         <Select
           value={selectedUser}
           defaultValue={selectedUser}
@@ -108,7 +114,7 @@ const AssignQuiz = (props) => {
           className="btn btn-warning mt-3"
           onClick={() => handleAssignQuizToUser()}
         >
-          Assign
+          {t("adminPage.content.manageQuiz.assignQuizToUser.button")}
         </button>
       </div>
     </div>

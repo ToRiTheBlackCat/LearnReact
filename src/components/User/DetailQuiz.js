@@ -181,6 +181,8 @@ const DetailQuiz = () => {
               index={index}
               handleCheckbox={handleCheckbox}
               data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
+              isShowAnswer={isShowAnswer}
+              dataModalResult={dataModalResult}
             />
           </div>
         </div>
