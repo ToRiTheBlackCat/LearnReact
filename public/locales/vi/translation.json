@@ -43,6 +43,12 @@
                     "selectUser": "Chọn người dùng",
                     "button": "Gán"
                 }
+            },
+            "manageQuestions": {
+                "title": "Quản lý câu hỏi",
+                "selectQuiz": "Chọn quiz",
+                "addQuestion": "Thêm câu hỏi",
+                "button": "Lưu câu hỏi"
             }
         }
     }

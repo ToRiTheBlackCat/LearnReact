@@ -43,6 +43,12 @@
                     "selectUser": "Select user",
                     "button": "Assign"
                 }
+            },
+            "manageQuestions": {
+                "title": "Manage Questions",
+                "selectQuiz": "Select quiz",
+                "addQuestion": "Add question",
+                "button": "Save Questions"
             }
         }
     }
