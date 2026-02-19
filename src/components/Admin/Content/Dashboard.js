@@ -13,9 +13,12 @@ import { getOverview } from "../../../services/apiServices";
 // import { RechartsDevtools } from "@recharts/devtools";
 import "./Dashboard.scss";
 import { useEffect, useState } from "react";
+import { useTranslation, Trans } from "react-i18next";
+
 const Dashboard = (props) => {
   const [dataOverview, setDataOverview] = useState({});
   const [dataChart, setDataChart] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchDataOverview();
@@ -55,13 +58,13 @@ const Dashboard = (props) => {
 
   return (
     <div className="dashboard-container">
-      <div className="title">Analytics Dashboard</div>
+      <div className="title">{t("adminPage.content.dashboardTitle")}</div>
       <div className="sub-title">Hello Trí đẹp trai</div>
       <hr />
       <div className="content">
         <div className="c-left">
           <div className="child">
-            <span className="text-1">Total User</span>
+            <span className="text-1">{t("adminPage.content.totalUsers")}</span>
             <span className="text-2">
               {dataOverview && dataOverview.users && dataOverview.users.total
                 ? dataOverview.users.total
@@ -69,7 +72,9 @@ const Dashboard = (props) => {
             </span>
           </div>
           <div className="child">
-            <span className="text-1">Total Quiz</span>
+            <span className="text-1">
+              {t("adminPage.content.totalQuizzes")}
+            </span>
             <span className="text-2">
               {dataOverview &&
               dataOverview.others &&
@@ -79,7 +84,9 @@ const Dashboard = (props) => {
             </span>
           </div>
           <div className="child">
-            <span className="text-1">Total Questions</span>
+            <span className="text-1">
+              {t("adminPage.content.totalQuestions")}
+            </span>
             <span className="text-2">
               {" "}
               {dataOverview &&
@@ -90,7 +97,9 @@ const Dashboard = (props) => {
             </span>
           </div>
           <div className="child">
-            <span className="text-1">Total Answers</span>
+            <span className="text-1">
+              {t("adminPage.content.totalAnswers")}
+            </span>
             <span className="text-2">
               {dataOverview &&
               dataOverview.others &&

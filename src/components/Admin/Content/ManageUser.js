@@ -11,6 +11,7 @@ import ModalUpdateUser from "./ModalUpdateUser";
 import ModalViewUser from "./ModalViewUser";
 import ModalDeleteUser from "./ModalDeleteUser";
 import TableUserPaginate from "./TableUserPaginate";
+import { useTranslation, Trans } from "react-i18next";
 
 const ManageUser = (props) => {
   const LIMIT_USER = 9;
@@ -25,6 +26,7 @@ const ManageUser = (props) => {
   const [dataDetail, setdataDetail] = useState({});
   const [dataUpdate, setDataUpdate] = useState({});
   const [listUsers, setListUsers] = useState([]);
+  const { t } = useTranslation();
   //ComponentDidMount
   //Not recommended to use async directly in useEffect
   useEffect(() => {
@@ -72,14 +74,14 @@ const ManageUser = (props) => {
 
   return (
     <div className="manage-user-container">
-      <div className="title">ManageUser</div>
+      <div className="title">{t("adminPage.content.manageUser.title")}</div>
       <div className="users-content">
         <div className="btn-add-new">
           <button
             className=" btn btn-success"
             onClick={() => setShowModalCreateUser(true)}
           >
-            <MdPlusOne /> Add new user
+            <MdPlusOne /> {t("adminPage.content.manageUser.addNew")}
           </button>
         </div>
         <div className="table-users-container">

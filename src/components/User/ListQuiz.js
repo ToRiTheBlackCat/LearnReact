@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { getQuizByUser } from "../../services/apiServices";
 import "./ListQuiz.scss";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 const ListQuiz = (props) => {
   const [arrQuiz, setArrQuiz] = useState([]);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     getQuizData();
@@ -44,7 +46,7 @@ const ListQuiz = (props) => {
                       })
                     }
                   >
-                    Start now
+                    {t("userPage.startButton")}
                   </button>
                 </div>
               </div>

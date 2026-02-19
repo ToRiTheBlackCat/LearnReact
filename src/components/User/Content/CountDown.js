@@ -1,11 +1,17 @@
 import { useState, useEffect } from "react";
 
 const CountDown = (props) => {
-  const [count, setCount] = useState(300);
+  const [count, setCount] = useState(props.timeup);
+
+  useEffect(() => {
+    setCount(props.timeup);
+  }, [props.timeup]);
 
   useEffect(() => {
     if (count === 0) {
-      props.onTimeUp();
+      if (props.timeup !== 0) {
+        props.onTimeUp();
+      }
       return;
     }
 
@@ -13,17 +19,11 @@ const CountDown = (props) => {
       setCount(count - 1);
     }, 1000); //sau 1s chạy 1 lần
 
-    // setTimeout(() => {}); //Chạy đúng 1 lần
-
     //Clean up
     return () => {
       clearInterval(timer);
     };
-
-    // clearInterval(() => {
-    //   clearInterval(timer);
-    // }, 5000); //Xóa đi lặp vô hạn của setInterval
-  }, [count]);
+  }, [count, props.timeup]);
 
   const toHHMMSS = (secs) => {
     const sec_num = parseInt(secs, 10);

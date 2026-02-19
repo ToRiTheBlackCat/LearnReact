@@ -2,9 +2,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import ReactPaginate from "react-paginate";
+import { useTranslation, Trans } from "react-i18next";
 
 const TableUserPaginate = (props) => {
   const { listUsers, pageCount } = props;
+  const { t } = useTranslation();
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {

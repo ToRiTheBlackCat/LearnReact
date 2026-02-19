@@ -1,3 +1,4 @@
+import { set } from "nprogress";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -6,6 +7,12 @@ const ModalResult = (props) => {
   const { show, setShow, dataModalResult } = props;
 
   const handleClose = () => setShow(false);
+
+  const handleShowAnswer = () => {
+    console.log("check dataModalResult: ", dataModalResult);
+    props.setIsShowAnswer(true);
+    setShow(false);
+  };
 
   return (
     <>
@@ -23,7 +30,7 @@ const ModalResult = (props) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={() => handleShowAnswer()}>
             Show answers
           </Button>
           <Button variant="primary" onClick={handleClose}>
